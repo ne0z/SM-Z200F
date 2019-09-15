@@ -1,0 +1,8 @@
+<manifest>
+	<request>
+		<domain name="_"/>
+	</request>
+	<assign>
+		<filesystem path="/opt/usr/devel/usr/bin/*" label="pulseaudio" exec_label="pulseaudio"/>
+	</assign>
+</manifest>

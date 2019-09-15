@@ -1,0 +1,11 @@
+Source: edje-multisense-plugin
+Section: libs
+Priority: optional
+Maintainer: Prince Kumar Dubey <prince.dubey@samsung.com>
+Uploaders: Daniel Juyung Seo <juyung.seo@samsung.com>
+Build-Depends: libedje-dev, libmm-sound-dev, libremix-dev, libsndfile1-dev, pkg-config, libtool
+
+Package: edje-multisense-plugin
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: EDJE & libremix Plugins for TIZEN sound/tone play

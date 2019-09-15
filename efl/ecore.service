@@ -1,0 +1,17 @@
+[Unit]
+Description=ecore
+DefaultDependencies=no
+After=local-fs.target
+Before=wm_ready.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/mkdir /run/.ecore
+ExecStartPre=/bin/chown app:app /run/.ecore
+ExecStartPre=/bin/chmod 755 /run/.ecore
+ExecStartPre=/usr/bin/chsmack -a 'ecore::lock' /run/.ecore
+ExecStart=/usr/bin/chsmack -t /run/.ecore
+
+[Install]
+WantedBy=multi-user.target
+

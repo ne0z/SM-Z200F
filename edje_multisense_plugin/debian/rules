@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+DEB_CONFIGURE_SCRIPT := ./autogen.sh
+DEB_MAKE_CLEAN_TARGET := distclean
+
+DEB_CONFIGURE_EXTRA_FLAGS := 
+DEB_SOURCE_VERSION := $(shell )
+CFLAGS += -fvisibility=hidden -ffast-math -fPIC
+LDFLAGS += -fvisibility=hidden -Wl,--hash-style=both -Wl,--as-needed
+
+
+clean::
+	[ ! -f Makefile ] || make distclean
+	rm -f edje-multisense-plugin*.tar.bz2 edje-multisense-plugin-*.tar.bz2.cdbs-config_list

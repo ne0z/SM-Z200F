@@ -1,0 +1,387 @@
+msgid "IDS_COM_BODY_TEXT_FIELD_T_TTS"
+msgstr "Inkundla yombhalo"
+
+msgid "IDS_BR_BODY_SAVE_LINK"
+msgstr "Londoloza ilinki"
+
+msgid "IDS_WEBVIEW_BODY_SHOWING_PD_ITEMS_TTS"
+msgstr "Ikhombisa izinto ezingu-%d"
+
+msgid "IDS_BR_BODY_DESTINATIONS_AUTHENTICATION_REQUIRED"
+msgstr "Ukuqinisekisa ubuyiyo kudingekile"
+
+msgid "IDS_COM_BODY_BUTTON_T_TTS"
+msgstr "Inkinobho"
+
+msgid "IDS_BR_BODY_AUTHUSERNAME"
+msgstr "Igama lomsebenzisi"
+
+msgid "IDS_BR_BODY_AUTHPASSWORD"
+msgstr "iphasiwedi"
+
+msgid "IDS_WEBVIEW_HEADER_THIS_WEBPAGE_IS_NOT_AVAILABLE"
+msgstr "Leli khasi lewebhu alitholakali."
+
+msgid "IDS_WEBVIEW_BODY_THE_SERVER_AT_PS_CANT_BE_FOUND_BECAUSE_THE_DNS_LOOK_UP_FAILED_MSG"
+msgstr "Iseva kokuthi %s ayitholakali ngoba ukufuna kwe-DNS kuhlulekile. I-DNS isevisi yenethiwekhi ehumushela igama lewebhusayithi ekhelini layo Le-inthanethi. Leli phutha livame ukubangelwa ukungabi noxhumano Ku-inthanethi noma inethiwekhi engamisiwe kahle. Lingase libangelwe nayiseva ye-DNS engasabeli noma i-firewall evimbela I-inthanethi ukuba ingene kunethiwekhi."
+
+msgid "IDS_WEBVIEW_BODY_EDITING_TTS"
+msgstr "Iyahlela."
+
+msgid "IDS_WEBVIEW_BODY_EDIT_FIELD__M_NOUN_TTS"
+msgstr "Hlela inkundla"
+
+msgid "IDS_WEBVIEW_BODY_ENTER_AN_EMAIL_ADDRESS"
+msgstr "Faka ikheli le-imeyili."
+
+msgid "IDS_WEBVIEW_BODY_ENTER_A_LIST_OF_EMAIL_ADDRESSES_SEPARATED_BY_COMMAS"
+msgstr "Faka uhlu lwamakheli e-imeyili, ahlukaniswe okhefana."
+
+msgid "IDS_WEBVIEW_BODY_ENTER_A_URL"
+msgstr "Faka i-URL."
+
+msgid "IDS_WEBVIEW_BODY_FIELD_CANNOT_BE_BLANK"
+msgstr "Inkundla ayikwazi ukungabi nalutho."
+
+msgid "IDS_WEBVIEW_BODY_INVALID_FORMAT_ENTERED"
+msgstr "Kufakwe ifomethi engalungile."
+
+msgid "IDS_WEBVIEW_BODY_INVALID_VALUE_ENTERED"
+msgstr "Kufakwe inani elingalungile."
+
+msgid "IDS_WEBVIEW_BODY_NO_FILES_HAVE_BEEN_SELECTED"
+msgstr "Awekho amafayela akhethiwe."
+
+msgid "IDS_WEBVIEW_BODY_PD_CHARACTERS_TTS"
+msgstr "Izinhlamvu ezingu-%d."
+
+msgid "IDS_WEBVIEW_BODY_PLUG_IN_MISSING"
+msgstr "Imfako ayikho"
+
+msgid "IDS_WEBVIEW_BODY_UNABLE_TO_LOAD_THE_PAGE_A_SECURE_CONNECTION_COULD_NOT_BE_MADE_TO_PS_THE_MOST_LIKELY_CAUSE_IS_THE_DEVICES_CLOCK_CHECK_THAT_THE_TIME_ON_YOUR_DEVICE_IS_CORRECT_AND_REFRESH_THE_PAGE"
+msgstr "Ayikwazi ukulayisha ikhasi. Uxhumano oluvikelekile alukwazanga ukwenziwa kokuthi %s. Kumelwe ukuba imbangela yiwashi ledivayisi. Hlola ukuthi isikhathi kudivayisi yakho silungile bese uvuselela ikhasi."
+
+msgid "IDS_WEBVIEW_BODY_UNABLE_TO_LOAD_THE_PAGE_PS_MAY_BE_TEMPORARILY_DOWN_OR_HAVE_MOVED_TO_A_NEW_URL"
+msgstr "Ayikwazi ukulayisha ikhasi. %s kungenzeka ayisebenzi okwesikhashana noma iyiswe ku-URL entsha."
+
+msgid "IDS_WEBVIEW_BODY_UNABLE_TO_LOAD_THE_PAGE_PS_TOOK_TOO_LONG_TO_RESPOND_THE_WEBSITE_MAY_BE_DOWN_OR_THERE_MAY_HAVE_BEEN_A_NETWORK_CONNECTION_ERROR"
+msgstr "Ayikwazi ukulayisha ikhasi. %s ithathe isikhathi eside kakhulu ukusabela. Iwebhusayithi kungenzeka ayisebenzi, noma kungenzeka kunephutha loxhumano lwenethiwekhi."
+
+msgid "IDS_WEBVIEW_BODY_VALUE_MUST_BE_AT_LEAST_PD"
+msgstr "Inani kumelwe okungenani lithi %d."
+
+msgid "IDS_WEBVIEW_BODY_VALUE_MUST_BE_NO_HIGHER_THAN_PD"
+msgstr "Inani kumelwe lingabi ngaphezu kokuthi %d."
+
+msgid "IDS_WEBVIEW_BODY_YOU_CAN_SEARCH_THIS_INDEX_ENTER_KEYWORDS_C"
+msgstr "Ungacinga le nkomba. Faka amagama asemqoka:"
+
+msgid "IDS_WEBVIEW_BUTTON2_NEVER"
+msgstr "Ungalokothi"
+
+msgid "IDS_WEBVIEW_BUTTON_LEAVE"
+msgstr "Shiya"
+
+msgid "IDS_WEBVIEW_BUTTON_NOT_NOW_ABB"
+msgstr "Hhayi manje"
+
+msgid "IDS_WEBVIEW_BUTTON_STAY"
+msgstr "Hlala"
+
+msgid "IDS_WEBVIEW_BUTTON_SUBMIT"
+msgstr "Hambisa"
+
+msgid "IDS_WEBVIEW_BUTTON_UPLOAD_FILE"
+msgstr "Layisha ifayela"
+
+msgid "IDS_WEBVIEW_BUTTON_UPLOAD_MULTIPLE_FILES"
+msgstr "Layisha amafayela amaningi"
+
+msgid "IDS_WEBVIEW_HEADER_MESSAGE_FROM_PS_M_WEBSITE"
+msgstr "Umlayezo osuka %s"
+
+msgid "IDS_WEBVIEW_HEADER_REMEMBER_PASSWORD"
+msgstr "Khumbula iphasiwedi"
+
+msgid "IDS_WEBVIEW_HEADER_SELECT_COLOUR"
+msgstr "Khetha umbala"
+
+msgid "IDS_WEBVIEW_OPT_CLIPBOARD"
+msgstr "Ibhodi lokunamathisela"
+
+msgid "IDS_WEBVIEW_OPT_COPY_AUDIO_URL_ABB"
+msgstr "Kopisha i-URL yokulalelwayo"
+
+msgid "IDS_WEBVIEW_OPT_COPY_IMAGE"
+msgstr "Kopisha umfanekiso"
+
+msgid "IDS_WEBVIEW_OPT_COPY_LINK_URL_ABB"
+msgstr "Kopisha i-URL yesixhumanisi"
+
+msgid "IDS_WEBVIEW_OPT_COPY_TO_CLIPBOARD"
+msgstr "Kopisha kubhodi lokunamathisela"
+
+msgid "IDS_WEBVIEW_OPT_COPY_VIDEO_URL_ABB"
+msgstr "Kopisha i-URL yevidiyo"
+
+msgid "IDS_WEBVIEW_OPT_CUT_ABB"
+msgstr "Sika"
+
+msgid "IDS_WEBVIEW_OPT_DO_NOT_SHOW_AGAIN"
+msgstr "Ungaphinde uveze"
+
+msgid "IDS_WEBVIEW_OPT_DRAG_AND_DROP_ABB"
+msgstr "Hudula bese udedela"
+
+msgid "IDS_WEBVIEW_OPT_ENABLE_DISABLE_REPEAT_MEDIA_ABB"
+msgstr "Vumela/vimbela ukuphindwa kwemidiya"
+
+msgid "IDS_WEBVIEW_OPT_FULL_VIEW_ABB"
+msgstr "Ukubuka okugcwele"
+
+msgid "IDS_WEBVIEW_OPT_OPEN_IMAGE_IN_NEW_TAB_ABB"
+msgstr "Vula umfanekiso kuthebhu entsha"
+
+msgid "IDS_WEBVIEW_OPT_OPEN_LINK_IN_NEW_TAB_ABB"
+msgstr "Vula isixhumanisi kuthebhu entsha"
+
+msgid "IDS_WEBVIEW_OPT_OPEN_VIDEO_IN_NEW_WINDOW_ABB"
+msgstr "Vula ividiyo efasiteleni elisha"
+
+msgid "IDS_WEBVIEW_OPT_PLAY"
+msgstr "Dlala"
+
+msgid "IDS_WEBVIEW_OPT_PLAY_AUDIO_IN_NEW_TAB_ABB"
+msgstr "Dlala okulalelwayo kuthebhu entsha"
+
+msgid "IDS_WEBVIEW_OPT_SAVE_IMAGE_ABB"
+msgstr "Londoloza umfanekiso"
+
+msgid "IDS_WEBVIEW_OPT_SELECTION_MODE_ABB"
+msgstr "Inqubo yokukhetha"
+
+msgid "IDS_WEBVIEW_OPT_SHOW_HIDE_MEDIA_CONTROLS_ABB"
+msgstr "Khombisa/fihla izilawuli zemidiya"
+
+msgid "IDS_WEBVIEW_OPT_SIGN_IN_USING_FINGERPRINTS"
+msgstr "Sayinela ukungena usebenzisa imigqa yomunwe"
+
+msgid "IDS_WEBVIEW_OPT_TRANSLATE_ABB"
+msgstr "Humusha"
+
+msgid "IDS_WEBVIEW_OPT_UNMUTE"
+msgstr "Vula umsindo"
+
+msgid "IDS_WEBVIEW_OPT_WEB_SEARCH"
+msgstr "Ukusesha kwe-web"
+
+msgid "IDS_WEBVIEW_POP_A_TEMPORARY_ERROR_HAS_OCCURRED"
+msgstr "Kuvele iphutha lesikhashana."
+
+msgid "IDS_WEBVIEW_POP_DO_YOU_WANT_THE_DEVICE_TO_REMEMBER_YOUR_PASSWORD_Q"
+msgstr "Uyafuna yini ukuba idivayisi ikhumbule iphasiwedi yakho?"
+
+msgid "IDS_WEBVIEW_POP_LEAVE_THIS_PAGE_Q"
+msgstr "Shiya leli khasi?"
+
+msgid "IDS_WEBVIEW_POP_SIGN_IN_TO_THIS_WEBSITE_AGAIN_BY_SWIPING_ANY_OF_YOUR_REGISTERED_FINGERS_OVER_THE_HOME_KEY_MSG"
+msgstr "Phinde usayinele ukungena kule webhusayithi ngokuswayipha noma imuphi weminwe yakho ebhalisiwe phezu kwenkinobho yasekhaya. Igama lomsebenzisi nephasiwedi yakho yale webhusayithi izolondolozwa kudivayisi yakho."
+
+msgid "IDS_BR_HEADER_UNABLE_TO_OPEN_FILE"
+msgstr "Ayikwazi ukuvula ifayela"
+
+msgid "IDS_BR_BODY_UNABLE_TO_OPEN_THE_FILE_AT_PS_IT_MAY_HAVE_BEEN_REMOVED_OR_RENAMED_OR_FILE_PERMISSIONS_MAY_BE_PREVENTING_ACCESS"
+msgstr "Ayikwazi ukuvula ifayela e-%s. Kungenzeka ukuthi ikhishiwe noma iqanjwe kabusha, noma izimvume zefayela zivimbele ukufinyeleleka."
+
+msgid "IDS_WEBVIEW_BUTTON_PREV_ABB"
+msgstr "Okudlule."
+
+msgid "IDS_WEBVIEW_OPT_SELECT_TEXT_ABB"
+msgstr "Khetha umbhalo"
+
+msgid "IDS_WEBVIEW_POP_SAVE_THIS_PASSWORD_ON_THIS_DEVICE_Q"
+msgstr "Londoloza le phasiwedi kule divayisi?"
+
+msgid "IDS_WEBVIEW_BUTTON_DONE"
+msgstr "Iqedile"
+
+msgid "IDS_WEBVIEW_BUTTON_RESET"
+msgstr "Lungisa"
+
+msgid "IDS_WEBVIEW_BUTTON_SAVE"
+msgstr "Londoloza"
+
+msgid "IDS_WEBVIEW_BUTTON_LATER_ABB"
+msgstr "Kamuva"
+
+msgid "IDS_WEBVIEW_BUTTON_OK_ABB4"
+msgstr "KULUNGILE"
+
+msgid "IDS_WEBVIEW_BUTTON_CANCEL_ABB4"
+msgstr "Khansela"
+
+msgid "IDS_WEBVIEW_BUTTON_NEXT_ABB3"
+msgstr "Okulandelayo"
+
+msgid "IDS_WEBVIEW_BODY_DETAILS"
+msgstr "Imininingwane"
+
+msgid "IDS_WEBVIEW_BODY_DOUBLE_TAB_TO_EDIT_TTS"
+msgstr "Thepha kabili ukuze uhlele."
+
+msgid "IDS_WEBVIEW_BODY_NOT_SELECTED_TTS"
+msgstr "Akukhethiwe"
+
+msgid "IDS_WEBVIEW_BODY_SELECTED_TTS"
+msgstr "Okukhethiwe"
+
+msgid "IDS_WEBVIEW_HEADER_SET_DATE_AND_TIME"
+msgstr "Misa usuku nesikhathi"
+
+msgid "IDS_WEBVIEW_OPT_COPY"
+msgstr "Kopisha"
+
+msgid "IDS_WEBVIEW_OPT_MUTE"
+msgstr "Thulisa"
+
+msgid "IDS_WEBVIEW_OPT_PASTE"
+msgstr "Namathisela"
+
+msgid "IDS_WEBVIEW_OPT_PAUSE"
+msgstr "Misa kancane"
+
+msgid "IDS_WEBVIEW_OPT_SELECT_ABB"
+msgstr "Khetha"
+
+msgid "IDS_WEBVIEW_OPT_SELECT_ALL_ABB"
+msgstr "Khetha konke"
+
+msgid "IDS_WEBVIEW_BUTTON_SET_ABB2"
+msgstr "Misa"
+
+msgid "IDS_WEBVIEW_BODY_CHECK_WEB_PAGE_URL"
+msgstr "Hlola i-URL yekhasi lewebhu"
+
+msgid "IDS_WEBVIEW_BODY_ERROR_PAGE"
+msgstr "Ikhasi lephutha"
+
+msgid "IDS_WEBVIEW_BODY_FAILED_TO_LOAD_FRAMES"
+msgstr "Ihlulekile ukulayisha izinhlaka."
+
+msgid "IDS_WEBVIEW_BODY_NETWORK_CONNECTION_NOT_ESTABLISHED_NORMALLY"
+msgstr "Uxhumano lwenethiwekhi alumiswanga ngendlela evamile."
+
+msgid "IDS_WEBVIEW_BODY_RELOAD_WEB_PAGE_LATER"
+msgstr "Layisha kabusha ikhasi lewebhu kamuva"
+
+msgid "IDS_WEBVIEW_BODY_THE_FILE_AT_PS_MAY_HAVE_BEEN_REMOVED_OR_MOVED_OR_FILE_PERMISSIONS_MAY_BE_PREVENTING_ACCESS"
+msgstr "Ifayela kokuthi %s kungenzeka likhishiwe noma lisusiwe, noma kungenzeka izimvume zefayela zivimbela ukungena."
+
+msgid "IDS_WEBVIEW_BODY_THE_MOST_LIKELY_CAUSE_IS_GIVEN_BELOW"
+msgstr "Kumelwe ukuba imbangela yilena enikezwe ngezansi."
+
+msgid "IDS_WEBVIEW_BODY_UNABLE_TO_FIND_THE_SERVER_AT_PS_THE_DNS_LOOKUP_FAILED_THE_DNS_IS_A_NETWORK_SERVICE_THAT_TRANSLATES_A_WEBSITES_URL_TO_ITS_IP_ADDRESS_MSG"
+msgstr "Ayikwazi ukuthola iseva kokuthi %s. Ukufuna i-DNS kuhlulekile. I-DNS isevisi yenethiwekhi ehumushela i-URL yewebhusayithi ekhelini layo le-IP. Leli phutha livame ukubangelwa ukungabi noxhumano Ku-inthanethi noma inethiwekhi engamisiwe kahle. Lingase libangelwe ukungasabeli kweseva ye-DNS noma i-firewall evimbela I-inthanethi ukuba ingene kunethiwekhi."
+
+msgid "IDS_WEBVIEW_BODY_UNABLE_TO_RETRIEVE_WEB_PAGE_HWEB_PAGE_MIGHT_BE_TEMPORARILY_DOWN_OR_HAVE_MOVED_TO_NEW_URL"
+msgstr "Ayikwazi ukubuyisa ikhasi lewebhu. (Kungenzeka ikhasi lewebhu alisebenzi okwesikhashana noma liyiswe ku-URL entsha.)"
+
+msgid "IDS_WEBVIEW_BODY_WEB_PAGE_NOT_AVAILABLE"
+msgstr "Ikhasi lewebhu alitholakali."
+
+msgid "IDS_WEBVIEW_BODY_WEB_PAGE_TEMPORARILY_NOT_AVAILABLE"
+msgstr "Ikhasi lewebhu alitholakali okwesikhashana."
+
+msgid "IDS_WEBVIEW_BODY_WHILE_RETRIEVING_WEB_PAGE_PS_FOLLOWING_ERROR_OCCURRED"
+msgstr "Ngesikhathi ubuyisa ikhasi lewebhu %s, kuvele iphutha elilandelayo."
+
+msgid "IDS_WEBVIEW_BUTTON2_ALWAYS"
+msgstr "Njalo"
+
+msgid "IDS_WEBVIEW_BUTTON2_NOT_NOW"
+msgstr "Hhayi manje"
+
+msgid "IDS_WEBVIEW_BUTTON_CLEAR"
+msgstr "Sula"
+
+msgid "IDS_WEBVIEW_HEADER_SET_DATE"
+msgstr "Misa usuku"
+
+msgid "IDS_WEBVIEW_HEADER_SET_TIME"
+msgstr "Isikhathi esisethiwe"
+
+msgid "IDS_WEBVIEW_HEADER_SIGN_IN_USING_FINGERPRINTS"
+msgstr "Sayinela ukungena usebenzisa imigqa yomunwe"
+
+msgid "IDS_WEBVIEW_HEADER_UNABLE_TO_OPEN_FILE"
+msgstr "Ayikwazi ukuvula ifayela"
+
+msgid "IDS_WEBVIEW_OPT_OPEN_IN_NEW_WINDOW_ABB"
+msgstr "Vula efasiteleni elisha"
+
+msgid "IDS_WEBVIEW_OPT_SEARCH_THE_INTERNET_ABB"
+msgstr "Cinga I-inthanethi"
+
+msgid "IDS_WEBVIEW_OPT_SELECT_WORD"
+msgstr "Khetha igama"
+
+msgid "IDS_WEBVIEW_POP_P1SS_HP2SS_IS_REQUESTING_PERMISSION_TO_ACCESS_YOUR_LOCATION"
+msgstr "I-%1$s (%2$s) icela imvume yokufinyelela indawo yakho."
+
+msgid "IDS_WEBVIEW_POP_P1SS_HP2SS_IS_REQUESTING_PERMISSION_TO_SHOW_NOTIFICATIONS"
+msgstr "I-%1$s (%2$s) icela imvume yokubonisa izaziso."
+
+msgid "IDS_WEBVIEW_POP_P1SS_HP2SS_IS_REQUESTING_PERMISSION_TO_STORE_A_LARGE_AMOUNT_OF_DATA_ON_YOUR_DEVICE_FOR_OFFLINE_USE"
+msgstr "%1$s (%2$s) ucela imvume yokugcina inani elikhulu ledatha kudivayisi yakho ezosetshenziswa kungaxhunyiwe ku-inthanethi."
+
+msgid "IDS_WEBVIEW_POP_P1SS_HP2SS_IS_REQUESTING_PERMISSION_TO_STORE_DATA_ON_YOUR_DEVICE_FOR_OFFLINE_USE"
+msgstr "I-%1$s (%2$s) icela imvume yokulondoloza idatha kudivayisi yakho ukuze lusetshenziswe kungaxhunyiwe ku-inthanethi."
+
+msgid "IDS_WEBVIEW_POP_P1SS_HP2SS_IS_REQUESTING_PERMISSION_TO_USE_YOUR_CAMERA"
+msgstr "I-%1$s (%2$s) icela imvume yokusebenzisa ikhamera yakho."
+
+msgid "IDS_WEBVIEW_POP_PS_IS_REQUESTING_PERMISSION_TO_ACCESS_YOUR_LOCATION"
+msgstr "%s ucela imvume yokungena endaweni yakho."
+
+msgid "IDS_WEBVIEW_POP_SAVE_YOUR_PASSWORD_Q"
+msgstr "Londoloza iphasiwedi yakho?"
+
+msgid "IDS_WEBVIEW_TPOP_UNABLE_TO_PLAY_VIDEOS_DURING_CALLS"
+msgstr "Awukwazi ukudlala amavidiyo phakathi nezingcingo."
+
+msgid "IDS_WEBVIEW_HEADER_SET_MONTH"
+msgstr "Setha inyanga"
+
+msgid "IDS_WEBVIEW_HEADER_SET_WEEK"
+msgstr "Setha iviki"
+
+msgid "IDS_WEBVIEW_HEADER_SIGN_IN_TO_ACCOUNT"
+msgstr "Sayinela ukungena ku-akhawunti"
+
+msgid "IDS_BR_HEADER_SAVE_SIGN_IN_INFO_ABB"
+msgstr "Londoloza ulwazi lokusayinela ukungena"
+
+msgid "IDS_COM_OPT_IMAGE"
+msgstr "Isithombe"
+
+msgid "IDS_BR_OPT_LINK"
+msgstr "Ixhumo"
+
+msgid "IDS_BR_POP_SAVE_YOUR_USERNAMES_AND_PASSWORDS_FOR_WEBSITES_Q"
+msgstr "Londoloza amagama akho okusebenzisa namaphasiwedi akho amawebhusayithi?"
+
+msgid "IDS_WEBVIEW_BODY_USERNAME"
+msgstr "Igama lomsebenzisi"
+
+msgid "IDS_WEBVIEW_BODY_UNABLE_TO_PLAY_MEDIA_WHILE_RECORDING_AUDIO"
+msgstr "Awukwazi ukudlala imidiya ngesikhathi usaqopha okulalelwayo."
+
+msgid "IDS_WEBVIEW_HEADER_QUICK_MEMO"
+msgstr "Imemo esheshayo"
+
+msgid "IDS_WEBVIEW_BODY_COPIED_TO_CLIPBOARD"
+msgstr "Kukopishwe kubhodi lokunamathisela."
+
+msgid "IDS_WEBVIEW_BODY_PASSWORD"
+msgstr "iphasiwedi"
+

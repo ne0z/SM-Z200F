@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.a11y.Bus
+Exec=/bin/sh -c 'if [ -z `ps awx | grep -v grep | grep at-spi-bus-launcher` ]; then exec @libexecdir@/at-spi-bus-launcher; fi'

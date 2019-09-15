@@ -1,0 +1,38 @@
+<manifest>
+ <request>
+    <domain name="_"/>
+ </request>
+ <assign>
+    <filesystem path="/usr/lib/ecore_x/bin/v-1.13/ecore_x_vsync" exec_label="none"/>
+    <filesystem path="/usr/lib/edje/utils/v-1.13/epp" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_cc" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_codegen" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_decc" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_external_inspector" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_inspector" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_pick" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_player" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_recc" exec_label="none"/>
+    <filesystem path="/usr/bin/edje_watch" exec_label="none"/>
+    <filesystem path="/usr/bin/eet" exec_label="none"/>
+    <filesystem path="/usr/bin/vieet" exec_label="none"/>
+    <filesystem path="/usr/bin/eeze_disk_ls" exec_label="none"/>
+    <filesystem path="/usr/bin/eeze_mount" exec_label="none"/>
+    <filesystem path="/usr/bin/eeze_scanner" exec_label="none"/>
+    <filesystem path="/usr/bin/eeze_umount" exec_label="none"/>
+    <filesystem path="/usr/bin/diffeet" exec_label="none"/>
+    <filesystem path="/usr/bin/eina-bench-cmp" exec_label="none"/>
+    <filesystem path="/usr/bin/eldbus-codegen" exec_label="none"/>
+    <filesystem path="/usr/bin/embryo_cc" exec_label="none"/>
+    <filesystem path="/usr/bin/emotion_test" exec_label="none"/>
+    <filesystem path="/usr/bin/ecore_evas_convert" exec_label="none"/>
+    <filesystem path="/usr/bin/ecore_evas_svg" exec_label="none"/>
+    <filesystem path="/usr/bin/evas_cserve2_client" exec_label="none"/>
+    <filesystem path="/usr/bin/evas_cserve2_debug" exec_label="none"/>
+    <filesystem path="/usr/bin/evas_cserve2_shm_debug" exec_label="none"/>
+    <filesystem path="/usr/bin/evas_cserve2_usage" exec_label="none"/>
+    <filesystem path="/usr/lib/evas/cserve2/bin/v-1.13/evas_cserve2" exec_label="none"/>
+    <filesystem path="/usr/lib/evas/cserve2/bin/v-1.13/evas_cserve2_slave" exec_label="none"/>
+    <filesystem path="/etc/opt/upgrade/220.evas.patch.sh" label="_" exec_label="none"/>
+ </assign>
+</manifest>

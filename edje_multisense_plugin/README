@@ -1,0 +1,31 @@
+Edje-MultiSense-Plugin 0.1.0 
+
+******************************************************************************
+
+ FOR ANY ISSUES PLEASE EMAIL:
+ enlightenment-devel@lists.sourceforge.net
+  
+******************************************************************************
+  
+Requirements:
+-------------
+
+Must:
+  libedje
+
+Edje is a graphical layout and animation library for animated resizable,
+compressed and scalable themes. It is meant to abstract UI from the
+programmer to make it possible to plug in any replacement look at feel
+that can be generated any time after an application or library has
+already been developed, thus allowing full flexibility of look and
+feel without having to involve the software developers.
+
+------------------------------------------------------------------------------
+COMPILING AND INSTALLING:
+
+  ./configure
+  make
+(as root unless you are installing in your users directories):
+  make install
+      
+      

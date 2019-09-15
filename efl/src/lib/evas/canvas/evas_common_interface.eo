@@ -1,0 +1,29 @@
+interface Evas.Common_Interface ()
+{
+   eo_prefix: evas_common;
+   properties {
+      evas {
+         get {
+            /*@
+            @brief   Gets the Evas canvas that the given object lives on.
+
+            @details This function is most useful at code contexts where you need to
+                     operate on the canvas but have only the object pointer.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @param[in]   obj  The given Evas object
+            @return  A pointer to the canvas where the object is on
+
+            @ingroup Evas_Object_Group_Basic
+            */
+            legacy: evas_object_evas_get;
+         }
+         values {
+            Evas *ret;
+         }
+      }
+   }
+}

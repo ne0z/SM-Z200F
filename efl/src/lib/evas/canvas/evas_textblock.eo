@@ -1,0 +1,497 @@
+class Evas.Textblock (Evas.Object)
+{
+   legacy_prefix: evas_object_textblock;
+   eo_prefix: evas_obj_textblock;
+   properties {
+      text_markup {
+         set {
+            /*@
+            @brief Sets the tetxblock's text to the markup text.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @remark assumes text does not include the unicode object replacement char (0xFFFC)
+
+            @return Return no value. */
+         }
+         get {
+            /*@
+            @brief Return the markup of the object.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @return the markup text of the object. */
+         }
+         values {
+            const(char)* text; /*@ the markup text to use. */
+         }
+      }
+      valign {
+         set {
+            /*@
+            @brief Sets the vertical alignment of text within the textblock object
+            as a whole.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @remark Normally alignment is 0.0 (top of object). Values given should be
+            between 0.0 and 1.0 (1.0 bottom of object, 0.5 being vertically centered
+            etc.).
+
+            @since 1.1 */
+         }
+         get {
+            /*@
+            @brief Gets the vertical alignment of a textblock
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @return The alignment set for the object.
+            @since 1.1 */
+         }
+         values {
+            double align; /*@ A value between @c 0.0 and @c 1.0. */
+         }
+      }
+      bidi_delimiters {
+         set {
+            /*@
+            @brief Sets the BiDi delimiters used in the textblock.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @remark BiDi delimiters are use for in-paragraph separation of bidi segments. This
+            is useful for example in recipients fields of e-mail clients where bidi
+            oddities can occur when mixing RTL and LTR.
+
+            @since 1.1 */
+         }
+         get {
+            /*@
+            @brief Gets the BiDi delimiters used in the textblock.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @remark BiDi delimiters are use for in-paragraph separation of bidi segments. This
+            is useful for example in recipients fields of e-mail clients where bidi
+            oddities can occur when mixing RTL and LTR.
+
+            @return A null terminated string of delimiters, e.g ",|". If empty, returns
+            @c NULL.
+            @since 1.1 */
+         }
+         values {
+            const(char)* delim; /*@ A null terminated string of delimiters, e.g ",|". */
+         }
+      }
+      replace_char {
+         set {
+            /*@
+            @brief Set the "replacement character" to use for the given textblock object.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            */
+         }
+         values {
+            const(char)* ch; /*@ The charset name. */
+         }
+      }
+      legacy_newline {
+         set {
+            /*@
+            @brief Sets newline mode. When true, newline character will behave
+            as a paragraph separator.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @since 1.1 */
+         }
+         get {
+            /*@
+            @brief Gets newline mode. When true, newline character behaves
+            as a paragraph separator.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @return @c EINA_TRUE if in legacy mode, @c EINA_FALSE otherwise.
+            @since 1.1 */
+         }
+         values {
+            bool mode; /*@ @c EINA_TRUE for legacy mode, @c EINA_FALSE otherwise. */
+         }
+      }
+      style {
+         set {
+            /*@
+            @brief Set the objects style to ts.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @return Returns no value. */
+         }
+         get {
+            /*@
+            @brief Return the style of an object.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @return the style of the object. */
+         }
+         values {
+            const(Evas_Textblock_Style)* ts; /*@ the style to set. */
+         }
+      }
+      node_format_first {
+         get {
+            /*@
+            @brief Get the first format node.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @param[in] obj The evas object. This must not be @c NULL.
+
+            @return The first format node,
+                    otherwise @c NULL if there is no first format node.
+            */
+            legacy: evas_textblock_node_format_first_get;
+         }
+         values {
+            const(Evas_Object_Textblock_Node_Format)* format;
+         }
+      }
+      size_formatted {
+         get {
+            /*@
+            @brief Get the formatted width and height. This calculates the actual size after restricting
+            the textblock to the current size of the object.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @remark The main difference between this and @ref evas_object_textblock_size_native_get
+            is that the "native" function does not wrapping into account
+            it just calculates the real width of the object if it was placed on an
+            infinite canvas, while this function gives the size after wrapping
+            according to the size restrictions of the object.
+
+            @remark For example for a textblock containing the text: "You shall not pass!"
+            with no margins or padding and assuming a monospace font and a size of
+            7x10 char widths (for simplicity) has a native size of 19x1
+            and a formatted size of 5x4.
+
+
+            @return Returns no value.
+            @see evas_object_textblock_size_native_get */
+         }
+         values {
+            Evas_Coord w; /*@ the width of the object. */
+            Evas_Coord h; /*@ the height of the object */
+         }
+      }
+      node_format_last {
+         get {
+            /*@
+            @brief Gets the last format node.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @param[in] obj The evas textblock.
+                       This must not be @c NULL.
+
+            @return The last format node,
+                    otherwise @c NULL if there is no last format node.
+            */
+            legacy: evas_textblock_node_format_last_get;
+         }
+         values {
+            const(Evas_Object_Textblock_Node_Format)* format;
+         }
+      }
+      cursor {
+         get {
+            /*@
+            @brief Return the object's main cursor.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @return The @p obj's main cursor. */
+            return: Evas_Textblock_Cursor *;
+         }
+      }
+      size_native {
+         get {
+            /*@
+            @brief Get the native width and height. This calculates the actual size without taking account
+            the current size of the object.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Object_Textblock
+
+            @remarks The main difference between this and @ref evas_object_textblock_size_formatted_get
+            is that the "native" function does not take wrapping into account
+            it just calculates the real width of the object if it was placed on an
+            infinite canvas, while the "formatted" function gives the size after
+            wrapping text according to the size restrictions of the object.
+
+            @remarks For example for a textblock containing the text: "You shall not pass!"
+            with no margins or padding and assuming a monospace font and a size of
+            7x10 char widths (for simplicity) has a native size of 19x1
+            and a formatted size of 5x4.
+
+            @return Returns no value. */
+         }
+         values {
+            Evas_Coord w; /*@ the width returned */
+            Evas_Coord h; /*@ the height returned */
+         }
+      }
+      style_insets {
+         get {
+            /*@ No description supplied by the EAPI. */
+         }
+         values {
+            Evas_Coord l;
+            Evas_Coord r;
+            Evas_Coord t;
+            Evas_Coord b;
+         }
+      }
+   }
+   methods {
+      line_number_geometry_get @const {
+         /*@
+         @brief Get the geometry of a line number.
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+         @return @c EINA_TRUE on success, @c EINA_FALSE otherwise. */
+         return: bool;
+         params {
+            @in int line; /*@ the line number. */
+            @out Evas_Coord cx; /*@ x coord of the line. */
+            @out Evas_Coord cy; /*@ y coord of the line. */
+            @out Evas_Coord cw; /*@ w coord of the line. */
+            @out Evas_Coord ch; /*@ h coord of the line. */
+         }
+      }
+      replace_char_get {
+        /*@
+        @brief Get the "replacement character" for given textblock object. Returns
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+        @c NULL if no replacement character is in use.
+
+        @return Replacement character or @c NULL. */
+
+        return: const(char)*;
+      }
+      style_user_pop {
+         /*@
+         @brief Del the from the top of the user style stack.
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+         @see evas_object_textblock_style_get
+         @since 1.2 */
+
+      }
+      cursor_new @const {
+         /*@
+         @brief Create a new cursor, associate it to the obj and init it to point
+         to the start of the textblock. Association to the object means the cursor
+         will be updated when the object will change.
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+         @remark if you need speed and you know what you are doing, it's slightly faster to just allocate the cursor yourself and not associate it. (only people developing the actual object, and not users of the object).
+
+         @return the new cursor. */
+         return: Evas_Textblock_Cursor *;
+      }
+      node_format_list_get @const {
+         /*@
+         @brief Gets the list format node corresponding to @a anchor
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif 
+
+         @ingroup Evas_Object_Textblock
+
+         @param[in] obj The evas object. This must not be @c NULL.
+         @param[in] anchor the anchor name to get
+
+         @return The list format node corresponding to the anchor,
+                 otherwise @c NULL if there is no list format node.
+         */
+         legacy: evas_textblock_node_format_list_get;
+         return: const(list<Evas.Object*>)*;
+         params {
+            @in const(char)* anchor;
+         }
+      }
+      style_user_peek @const {
+         /*@
+         @brief Get (don't remove) the style at the top of the user style stack.
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+         @return the style of the object.
+         @see evas_object_textblock_style_get
+         @since 1.2 */
+         return: const(Evas_Textblock_Style)*;
+      }
+      node_format_remove_pair {
+         /*@
+         @brief Removes a format node and its match.
+                That is it removes a \<tag\> \</tag\> pair.
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+         @remarks Assumes that the node is the first part of \<tag\>.
+                  This does not work if @a n is a closing tag.
+
+         @param[in] obj The Evas object of the textblock.
+                        This must not be @c NULL.
+
+         @param[in] n The current format node.
+                      This must not be @c NULL.
+         */
+         legacy: evas_textblock_node_format_remove_pair;
+         params {
+            @in Evas_Object_Textblock_Node_Format *n;
+         }
+      }
+      clear {
+         /*@
+         @brief Clear the textblock object.
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+         @remark Does *NOT* free the Evas object itself.
+
+         @return nothing. */
+
+         legacy: null;
+      }
+      style_user_push {
+         /*@
+         @brief Push ts to the top of the user style stack.
+
+         @if MOBILE @since_tizen 2.3
+         @elseif WEARABLE @since_tizen 2.3.1
+         @endif
+
+         @ingroup Evas_Object_Textblock
+
+         @remark FIXME: API is solid but currently only supports 1 style in the stack.
+
+         @remark The user style overrides the corresponding elements of the regular style.
+         This is the proper way to do theme overrides in code.
+         @return Returns no value.
+         @see evas_object_textblock_style_set
+         @since 1.2 */
+
+         params {
+            @in Evas_Textblock_Style *ts; /*@ the style to set. */
+         }
+      }
+   }
+   implements {
+      Eo.Base.constructor;
+      Eo.Base.destructor;
+      Eo.Base.dbg_info_get;
+   }
+}

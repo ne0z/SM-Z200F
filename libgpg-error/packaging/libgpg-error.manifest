@@ -1,0 +1,15 @@
+<manifest>
+  <define>
+    <domain name="libgpg-error" />
+  </define>
+  <assign>
+    <filesystem path="/bin/*" label="_" exec_label="none" />
+    <filesystem path="/sbin/*" label="_" exec_label="none" />
+    <filesystem path="/usr/bin/*" label="_" exec_label="none" />
+    <filesystem path="/usr/sbin/*" label="_" exec_label="none" />
+    <filesystem path="/usr/lib/*" label="_" exec_label="none" />
+  </assign>
+  <request>
+    <domain name="_"/>
+  </request>
+</manifest>

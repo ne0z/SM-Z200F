@@ -1,0 +1,43 @@
+class Evas.Line (Evas.Object)
+{
+   legacy_prefix: evas_object_line;
+   eo_prefix: evas_obj_line;
+   properties {
+      xy {
+         set {
+            /*@
+            @brief Sets the coordinates of the end points of the given evas line object.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Line_Group
+
+            @since 1.8 */
+         }
+         get {
+            /*@
+            @brief Retrieves the coordinates of the end points of the given evas line object.
+
+            @if MOBILE @since_tizen 2.3
+            @elseif WEARABLE @since_tizen 2.3.1
+            @endif
+
+            @ingroup Evas_Line_Group
+
+            @remark second end point. */
+         }
+         values {
+            Evas_Coord x1(0); /*@ The X coordinate of the first point. */
+            Evas_Coord y1(3); /*@ The Y coordinate of the first point. */
+            Evas_Coord x2; /*@ The X coordinate of the second point. */
+            Evas_Coord y2; /*@ The Y coordinate of the second point. */
+         }
+      }
+   }
+   implements {
+      Eo.Base.constructor;
+   }
+
+}

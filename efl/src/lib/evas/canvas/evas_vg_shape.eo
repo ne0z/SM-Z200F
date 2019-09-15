@@ -1,0 +1,66 @@
+class Evas.VG_Shape (Evas.VG_Node, Efl.Gfx.Shape)
+{
+   eo_prefix: evas_vg_shape;
+   legacy_prefix: null;
+   properties {
+      fill {
+         set {
+            /*@
+              Sets the Evas_Vg_Node to be used for filling this shape.
+            */
+         }
+         get {
+            /*@
+              Get the Evas_Vg_Node used for filling this shape.
+            */
+         }
+         values {
+            Evas_VG_Node *f; /*@ Node to be used in filling this shape */
+         }
+      }
+      stroke_fill {
+         set {
+            /*@
+              Sets the Evas_Vg_Node to be used for stroking this shape.
+            */
+         }
+         get {
+            /*@
+              Get the Evas_Vg_Node used for stroking this shape.
+            */
+         }
+         values {
+            Evas_VG_Node *f; /*@ Node to be used in stroking this shape */
+         }
+      }
+      stroke_marker {
+         set {
+            /*@
+              Not implemented.
+            */
+         }
+         get {
+            /*@
+              Not implemented.
+            */
+         }
+         values {
+            Evas_VG_Node *m;
+         }
+      }
+   }
+   implements {
+      Efl.Gfx.Shape.stroke_scale;
+      Efl.Gfx.Shape.stroke_color;
+      Efl.Gfx.Shape.stroke_width;
+      Efl.Gfx.Shape.stroke_location;
+      Efl.Gfx.Shape.stroke_dash;
+      Efl.Gfx.Shape.stroke_cap;
+      Efl.Gfx.Shape.stroke_join;
+      Efl.Gfx.Shape.path;
+      Efl.Gfx.Base.color.set;
+      Evas.VG_Node.bound_get;
+      Eo.Base.constructor;
+      Eo.Base.destructor;
+   }
+}

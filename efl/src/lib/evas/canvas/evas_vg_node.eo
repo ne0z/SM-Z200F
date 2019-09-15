@@ -1,0 +1,173 @@
+abstract Evas.VG_Node (Eo.Base, Efl.Gfx.Base)
+{
+   eo_prefix: evas_vg_node;
+   legacy_prefix: null;
+   properties {
+      transformation {
+         set {
+            /*@
+             Sets the transformation matrix to be used for this node object.
+             @since 1.14
+            */
+         }
+         get {
+            /*@
+             Gets the transformation matrix used for this node object.
+             @since 1.14
+            */
+         }
+         values {
+            const(Eina_Matrix3) *m; /*@ transformation matrix */
+         }
+      }
+      origin {
+         set {
+            /*@
+             Sets the origin position of this node object. This origin position
+             affects to node transformation
+             @since 1.14
+            */
+         }
+         get {
+            /*@
+             Gets the origin position of this node object.
+             @since 1.14
+            */
+         }
+         values {
+            double x; /* @origin x position */
+            double y; /* @origin y position */
+         }
+      }
+      mask {
+         set {
+            /*@
+              Not implemented.
+            */
+         }
+         get {
+            /*@
+              Not implemented.
+            */
+         }
+         values {
+            Evas_VG_Node *m;
+         }
+      }
+/*    quality {
+         set {
+         }
+         get {
+         }
+         values {
+            Evas_VG_Quality q;
+         }
+      } */
+   }
+   methods {
+      bound_get {
+         /*@
+          Give the bounding box in screen coordinate as being drawn.
+          It will start as the control box until it is refined once the shape
+          is computed.
+          @since 1.14
+         */
+         return: bool @warn_unused;
+         params {
+            @out Eina_Rectangle r; /*@ bounding box to be returned */
+         }
+      }
+      original_bound_get {
+         /*@
+          Give the bounding box in screen coordinate as defined in
+          the file or at the insertion of the object (before any scaling).
+          @since 1.14
+         */
+         return: bool @warn_unused;
+         params {
+            @out Eina_Rectangle r; /*@ original bounding box to be returned */
+         }
+      }
+      raise {
+         /*@
+          Raise @p obj to the top of its layer.
+          @p obj will, then, be the highest one in the layer it belongs
+          to. Object on other layers won't get touched.
+
+          @see evas_vg_node_stack_above()
+          @see evas_vg_node_stack_below()
+          @see evas_vg_node_lower()
+          @since 1.14
+         */
+      }
+      stack_above {
+         /*@
+          Stack @p obj immediately above @p above Objects, in a given
+          Evas_VG_Container, are stacked in the order they get added to it.
+          This means that, if they overlap, the highest ones will cover the
+          lowest ones, in that order. This function is a way to change the
+          stacking order for the objects.
+          This function is intended to be used with <b>objects belonging to
+          the same container</b>, otherwise it will fail (and accomplish
+          nothing).
+
+          @see evas_vg_node_stack_below()
+          @since 1.14
+         */
+         params {
+            @in Evas_VG_Node *above @nonull; /*@ the object above which to
+                                               stack */
+         }
+      }
+      stack_below {
+         /*@
+          Stack @p obj immediately below @p below
+          Objects, in a given container, are stacked in the order they get
+          added to it.  This means that, if they overlap, the highest ones
+          will cover the lowest ones, in that order. This function is a way
+          to change the stacking order for the objects.
+          This function is intended to be used with <b>objects belonging to
+          the same container</b>, otherwise it will fail (and accomplish
+          nothing).
+
+          @see evas_vg_node_layer_get()
+          @see evas_vg_node_layer_set()
+          @see evas_vg_node_stack_below()
+          @since 1.14
+         */
+         params {
+            @in Evas_Object *below @nonull; /*@ the object below which to
+                                              stack */
+         }
+      }
+      lower {
+         /*@
+          Lower @p obj to the bottom of its layer.
+          @p obj will, then, be the lowest one in the layer it belongs
+          to. Objects on other layers won't get touched.
+
+          @see evas_vg_node_stack_above()
+          @see evas_vg_node_stack_below()
+          @see evas_vg_node_raise()
+          @since 1.14
+         */
+      }
+      changed {
+         /*@ Request for a redraw of the node object
+             @since 1.14
+         */
+      }
+   }
+   implements {
+      Eo.Base.parent.set;
+      Eo.Base.constructor;
+      Efl.Gfx.Base.visible.set;
+      Efl.Gfx.Base.visible.get;
+      Efl.Gfx.Base.color.set;
+      Efl.Gfx.Base.color.get;
+      Efl.Gfx.Base.size.get;
+      Efl.Gfx.Base.position.set;
+      Efl.Gfx.Base.position.get;
+      @virtual .bound_get;
+   }
+}

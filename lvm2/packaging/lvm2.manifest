@@ -1,0 +1,8 @@
+<manifest>
+  <assign>
+    <filesystem path="*" label="_" exec_label="none" />
+  </assign>
+  <request>
+    <domain name="_"/>
+  </request>
+</manifest>

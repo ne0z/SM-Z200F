@@ -1,0 +1,19 @@
+<manifest>
+  <define>
+    <domain name="systemd" />
+    <provide>
+      <label name="systemd::journal" />
+    </provide>
+    <request>
+      <smack request="systemd::journal" type="rwxt" />
+    </request>
+  </define>
+  <assign>
+    <filesystem path="*" label="_" exec_label="none" />
+    <filesystem path="/usr/lib/systemd/systemd-*" label="systemd" exec_label="systemd" />
+    <filesystem path="/usr/lib/systemd/systemd-bootchart" label="_" exec_label="none" />
+  </assign>
+  <request>
+    <domain name="systemd"/>
+  </request>
+</manifest>

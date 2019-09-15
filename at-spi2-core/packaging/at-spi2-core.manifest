@@ -1,0 +1,27 @@
+<manifest>
+ <define>
+    <domain name="atspi" policy="shared"/>
+    <permit>
+       <smack permit="dbus" type="rwx" />
+       <smack permit="xorg" type="rwx" />
+    </permit>
+    <request>
+       <smack request="dbus" type="rwx" />
+       <smack request="xorg" type="rwx" />
+       <smack request="tizen::vconf::public::r::platform::rw" type="rw" />
+       <smack request="system::homedir" type="x" />
+       <smack request="device::sys_logging" type="rwx" />
+       <smack request="device::app_logging" type="rwx" />
+       <smack request="sdbd" type="rwx" />
+       <smack request="pkgmgr::db" type="rwx" />
+       <smack request="app-svc::db" type="rwx" />
+       <smack request="aul::launch" type="rwx" />
+       <smack request="aul::terminate" type="rwx" />
+       <smack request="sys-assert::core" type="rwxat" />
+    </request>
+ </define>
+
+ <request>
+    <domain name="atspi"/>
+ </request>
+</manifest>

@@ -1,0 +1,229 @@
+--- a/netstat.c
++++ b/netstat.c
+@@ -86,6 +86,7 @@
+ #include <sys/ioctl.h>
+ #include <net/if.h>
+ #include <dirent.h>
++#include <attr/xattr.h>
+ 
+ #if HAVE_SELINUX
+ #include <selinux/selinux.h>
+@@ -104,6 +105,13 @@
+ #define PROGNAME_WIDTH 20
+ #define SELINUX_WIDTH 50
+ 
++#define SMK_WIDTH 27
++#define SMK_BANNER_IN "IPIN"
++#define SMK_BANNER_OUT "IPOUT"
++#define SMK_LABELLEN 256
++#define SMK_ATTR_IN "security.SMACK64IPIN"
++#define SMK_ATTR_OUT "security.SMACK64IPOUT"
++
+ #if !defined(s6_addr32) && defined(in6a_words)
+ #define s6_addr32 in6a_words	/* libinet6			*/
+ #endif
+@@ -183,8 +191,7 @@ int flag_arg = 0;
+ int flag_ver = 0;
+ int flag_selinux = 0;
+ int flag_trim = 0;
+-
+-
++int flag_smack = 0;
+ 
+ FILE *procinfo;
+ 
+@@ -252,13 +259,23 @@ FILE *procinfo;
+ #define SELINUX_WIDTH1(s) SELINUX_WIDTH2(s)
+ #define SELINUX_WIDTH2(s) #s
+ 
++#define SMK_WIDTHs SMK_WIDTH1(SMK_WIDTH)
++#define SMK_WIDTH1(s) SMK_WIDTH2(s)
++#define SMK_WIDTH2(s) #s
++
+ #define PRG_HASH_SIZE 211
+ 
++static struct smk {
++    char in[SMK_LABELLEN];
++    char out[SMK_LABELLEN];
++};
++
+ static struct prg_node {
+     struct prg_node *next;
+     unsigned long inode;
+     char name[PROGNAME_WIDTH];
+     char scon[SELINUX_WIDTH];
++    struct smk smk_labels;
+ } *prg_hash[PRG_HASH_SIZE];
+ 
+ static char prg_cache_loaded = 0;
+@@ -272,6 +289,8 @@ static char prg_cache_loaded = 0;
+ 
+ #define print_selinux_banner() do { if (flag_selinux) printf("%-" SELINUX_WIDTHs "s"," " SELINUX_BANNER); } while (0)
+ 
++#define print_smack_banner() do { if (flag_smack) printf(" %-" SMK_WIDTHs "s" " " "%-" SMK_WIDTHs "s", SMK_BANNER_IN, SMK_BANNER_OUT); } while (0)
++
+ #define PRG_LOCAL_ADDRESS "local_address"
+ #define PRG_INODE	 "inode"
+ #define PRG_SOCKET_PFX    "socket:["
+@@ -293,7 +312,7 @@ static char prg_cache_loaded = 0;
+ /* NOT working as of glibc-2.0.7: */
+ #undef  DIRENT_HAVE_D_TYPE_WORKS
+ 
+-static void prg_cache_add(unsigned long inode, char *name, char *scon)
++static void prg_cache_add(unsigned long inode, char *name, char *scon, struct smk *const smk_labels)
+ {
+     unsigned hi = PRG_HASHIT(inode);
+     struct prg_node **pnp,*pn;
+@@ -322,6 +341,9 @@ static void prg_cache_add(unsigned long inode, char *name, char *scon)
+        else
+ 	   strcpy(pn->scon,scon);
+     }
++
++    strncpy(pn->smk_labels.in, smk_labels->in, SMK_LABELLEN);
++    strncpy(pn->smk_labels.out, smk_labels->out, SMK_LABELLEN);
+ }
+ 
+ static const char *prg_cache_get(unsigned long inode)
+@@ -344,6 +366,28 @@ static const char *prg_cache_get_con(unsigned long inode)
+     return("-");
+ }
+ 
++static const char *prg_cache_get_smkin(unsigned long inode)
++{
++    unsigned hi = PRG_HASHIT(inode);
++    struct prg_node *pn;
++
++    for (pn = prg_hash[hi]; pn; pn = pn->next)
++        if (pn->inode == inode)
++            return pn->smk_labels.in;
++    return ("-");
++}
++
++static const char *prg_cache_get_smkout(unsigned long inode)
++{
++    unsigned hi = PRG_HASHIT(inode);
++    struct prg_node *pn;
++
++    for (pn = prg_hash[hi]; pn; pn = pn->next)
++        if (pn->inode == inode)
++            return pn->smk_labels.out;
++    return ("-");
++}
++
+ static void prg_cache_clear(void)
+ {
+     struct prg_node **pnp,*pn;
+@@ -402,6 +446,21 @@ static void extract_type_2_socket_inode(const char lname[], unsigned long * inod
+ }
+ 
+ 
++static void get_smack_labels(const char *line, struct smk *smk_labels) {
++    int ret;
++
++    ret = getxattr(line, SMK_ATTR_OUT, smk_labels->out, SMK_LABELLEN);
++    if (ret == -1)
++        smk_labels->out[0] = '\0';
++    else
++        smk_labels->out[ret > SMK_WIDTH ? SMK_WIDTH : ret] = '\0';
++
++    ret = getxattr(line, SMK_ATTR_IN, smk_labels->in, SMK_LABELLEN);
++    if (ret == -1)
++        smk_labels->in[0] = '\0';
++    else
++        smk_labels->in[ret > SMK_WIDTH ? SMK_WIDTH : ret] = '\0';
++}
+ 
+ static void prg_cache_load(void)
+ {
+@@ -414,6 +473,7 @@ static void prg_cache_load(void)
+     struct dirent *direproc,*direfd;
+     security_context_t scon=NULL;
+     int status;
++    struct smk smk_labels;
+ 
+     if (prg_cache_loaded || !flag_prg) return;
+     prg_cache_loaded=1;
+@@ -462,6 +522,7 @@ static void prg_cache_load(void)
+             if (status < 0) extract_type_2_socket_inode(lname, &inode, &status);
+ 
+             if (status < 0) continue;
++	    get_smack_labels(line, &smk_labels);
+ 
+ 	    if (!cmdlp) {
+ 		if (procfdlen - PATH_FD_SUFFl + PATH_CMDLINEl >= 
+@@ -489,11 +550,13 @@ static void prg_cache_load(void)
+ 	    if (getpidcon(atoi(direproc->d_name), &scon) == -1) {
+ 		    scon=strdup("-");
+ 	    }
+-	    prg_cache_add(inode, finbuf, scon);
++	    prg_cache_add(inode, finbuf, scon, &smk_labels);
+ 	    freecon(scon);
+ #else
+-	    prg_cache_add(inode, finbuf, "-");
++	    prg_cache_add(inode, finbuf, "-", &smk_labels);
+ #endif
++	    smk_labels.in[0] = '\0';
++	    smk_labels.out[0] = '\0';
+ 	}
+ 	closedir(dirfd); 
+ 	dirfd = NULL;
+@@ -1770,7 +1833,14 @@ static void unix_do_one(int nr, const char *line)
+ 	printf("%-" PROGNAME_WIDTHs "s",(has & HAS_INODE?prg_cache_get(inode):"-"));
+     if (flag_selinux)
+ 	printf("%-" SELINUX_WIDTHs "s",(has & HAS_INODE?prg_cache_get_con(inode):"-"));
+-    puts(path);
++    if (flag_smack) {
++        printf("%-" SMK_WIDTHs "s",
++                (has & HAS_INODE ? prg_cache_get_smkin(inode) : "-"));
++        printf(" %-" SMK_WIDTHs "s",
++                (has & HAS_INODE ? prg_cache_get_smkout(inode) : "-"));
++    }
++
++    printf(" %s\n", path);
+ }
+ 
+ static int unix_info(void)
+@@ -1789,6 +1859,7 @@ static int unix_info(void)
+     printf(_("\nProto RefCnt Flags       Type       State         I-Node"));
+     print_progname_banner();
+     print_selinux_banner();
++    print_smack_banner();
+     printf(_(" Path\n"));	/* xxx */
+ 
+     {
+@@ -2070,6 +2141,7 @@ static void usage(void)
+     fprintf(stderr, _("        -C, --cache                display routing cache instead of FIB\n"));
+     fprintf(stderr, _("        -T, --notrim               stop trimming long addresses\n"));
+     fprintf(stderr, _("        -Z, --context              display SELinux security context for sockets\n\n"));
++    fprintf(stderr, _("        -X, --smack              display Smack labels for sockets\n"));
+ 
+     fprintf(stderr, _("  <Iface>: Name of interface to monitor/list.\n"));
+     fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-S|--sctp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
+@@ -2119,6 +2191,7 @@ int main
+ 	{"groups", 0, 0, 'g'},
+ 	{"context", 0, 0, 'Z'},
+ 	{"notrim", 0, 0, 'T'},
++	{"smack", 0 , 0, 'X'},
+ 	{NULL, 0, 0, 0}
+     };
+ 
+@@ -2131,7 +2204,7 @@ int main
+ 
+     afname[0] = '\0';
+ 
+-    while ((i = getopt_long(argc, argv, "MCFA:acdegphiI::nNorstuSVv?wxlZT", longopts, &lop)) != EOF)
++    while ((i = getopt_long(argc, argv, "MCFA:acdegphiI::nNorstuSVv?wxlZTX", longopts, &lop)) != EOF)
+ 	switch (i) {
+ 	case -1:
+ 	    break;
+@@ -2246,6 +2319,10 @@ int main
+ #endif
+ 
+ 	    break;
++	case 'X':
++		flag_smack++;
++		flag_prg++;
++		break;
+ 	case '?':
+ 	case 'h':
+ 	    usage();

@@ -1,0 +1,64 @@
+edje-multisense-plugin (0.1.0-8) unstable; urgency=low
+
+  * Package Upload
+  * Git: slp/pkgs/e/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-8
+
+ -- WooHyun Jung <wh0705.jung@samsung.com>  Wed, 16 May 2012 11:36:09 +0900
+
+edje-multisense-plugin (0.1.0-7) unstable; urgency=low
+
+  * Package Upload
+  * Git: slp/pkgs/e/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-7
+
+ -- WooHyun Jung <wh0705.jung@samsung.com>  Wed, 16 May 2012 11:00:15 +0900
+
+edje-multisense-plugin (0.1.0-6) unstable; urgency=low
+
+  * Package Upload
+  * Git: slp/pkgs/e/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-6
+
+ -- WooHyun Jung <wh0705.jung@samsung.com>  Wed, 16 May 2012 10:23:35 +0900
+
+edje-multisense-plugin (0.1.0-5) unstable; urgency=low
+
+  * Package Upload.
+  * Git: slp/pkgs/e/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-5
+
+ -- Daniel Juyung Seo <juyung.seo@samsung.com>  Tue, 15 May 2012 18:13:57 +0900
+
+edje-multisense-plugin (0.1.0-4) unstable; urgency=low
+
+  * Package Upload.
+  * Git: 165.213.149.219:29418/slp/pkgs/e/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-4
+
+ -- Daniel Juyung Seo <juyung.seo@samsung.com>  Tue, 15 May 2012 15:06:37 +0900
+
+edje-multisense-plugin (0.1.0-3) unstable; urgency=low
+
+  * Refactored Version.
+  * Sound Player, Eet Sound Reader and Sound Factory modules are added.
+  * Git: 165.213.149.219:29418/slp/pkgs/e/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-3
+
+ -- Prince Kumar Dubey <prince.dubey@samsung.com>  Thu, 19 Jan 2012 19:33:26 +0530
+
+edje-multisense-plugin (0.1.0-2) unstable; urgency=low
+
+  * Initial Version.
+  * Git: 165.213.180.234:/git/slp/pkgs/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-2
+
+ -- WooHyun Jung <wh0705.jung@samsung.com>  Wed, 06 Oct 2010 16:07:26 +0900
+
+edje-multisense-plugin (0.1.0-1) unstable; urgency=low
+
+  * Initial Version.
+  * Git: 165.213.180.234:/git/slp/pkgs/edje_multisense_plugin
+  * Tag: edje-multisense-plugin_0.1.0-1
+
+ -- Amit Kumar Singh <ak.singh7@samsung.com>  Tue, 28 Sep 2010 21:21:55 +0530

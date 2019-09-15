@@ -1,0 +1,1246 @@
+/*
+ * Copyright (C) 2013 Samsung Electronics
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. AND ITS CONTRIBUTORS ``AS IS''
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL APPLE INC. OR ITS CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#if defined(ENABLE_TIZEN_DISPLAY_RESOLUTION_HD)
+#define MAX_SIZE_STEP1 26
+#define MAX_SIZE_STEP2 52
+#define MAX_SIZE_STEP3 78
+#define MAX_SIZE_STEP4 104
+#define MAX_SIZE_STEP5 130
+
+#define MIN_SIZE_STEP1 16
+#define MIN_SIZE_STEP2 32
+#define MIN_SIZE_STEP3 48
+#define MIN_SIZE_STEP4 64
+#define MIN_SIZE_STEP5 80
+
+#define MIN_SIZE_OFFSET_STEP1 15
+#define MIN_SIZE_OFFSET_STEP2 31
+#define MIN_SIZE_OFFSET_STEP3 47
+#define MIN_SIZE_OFFSET_STEP4 63
+#define MIN_SIZE_OFFSET_STEP5 79
+
+#define OVERLAY_SIZE_STEP1 10.0
+#define OVERLAY_SIZE_STEP2 20.0
+#define OVERLAY_SIZE_STEP3 30.0
+#define OVERLAY_SIZE_STEP4 40.0
+#define OVERLAY_SIZE_STEP5 50.0
+#elif defined(ENABLE_TIZEN_DISPLAY_RESOLUTION_WVGA)
+#define MAX_SIZE_STEP1 16
+#define MAX_SIZE_STEP2 32
+#define MAX_SIZE_STEP3 48
+#define MAX_SIZE_STEP4 64
+#define MAX_SIZE_STEP5 80
+
+#define MIN_SIZE_STEP1 10
+#define MIN_SIZE_STEP2 20
+#define MIN_SIZE_STEP3 30
+#define MIN_SIZE_STEP4 40
+#define MIN_SIZE_STEP5 50
+
+#define MIN_SIZE_OFFSET_STEP1 9
+#define MIN_SIZE_OFFSET_STEP2 19
+#define MIN_SIZE_OFFSET_STEP3 29
+#define MIN_SIZE_OFFSET_STEP4 39
+#define MIN_SIZE_OFFSET_STEP5 49
+
+#define OVERLAY_SIZE_STEP1 6.0
+#define OVERLAY_SIZE_STEP2 12.0
+#define OVERLAY_SIZE_STEP3 18.0
+#define OVERLAY_SIZE_STEP4 24.0
+#define OVERLAY_SIZE_STEP5 30.0
+#else
+#define MAX_SIZE_STEP1 16
+#define MAX_SIZE_STEP2 32
+#define MAX_SIZE_STEP3 48
+#define MAX_SIZE_STEP4 64
+#define MAX_SIZE_STEP5 80
+
+#define MIN_SIZE_STEP1 10
+#define MIN_SIZE_STEP2 20
+#define MIN_SIZE_STEP3 30
+#define MIN_SIZE_STEP4 40
+#define MIN_SIZE_STEP5 50
+
+#define MIN_SIZE_OFFSET_STEP1 9
+#define MIN_SIZE_OFFSET_STEP2 19
+#define MIN_SIZE_OFFSET_STEP3 29
+#define MIN_SIZE_OFFSET_STEP4 39
+#define MIN_SIZE_OFFSET_STEP5 49
+
+#define OVERLAY_SIZE_STEP1 6.0
+#define OVERLAY_SIZE_STEP2 12.0
+#define OVERLAY_SIZE_STEP3 18.0
+#define OVERLAY_SIZE_STEP4 24.0
+#define OVERLAY_SIZE_STEP5 30.0
+#endif
+
+collections{
+    group { name: "edge_effect";
+        script {
+            public top_down_x = 0, top_down_y = 0
+            public top_move_x = 0, top_move_y = 0
+            public top_diff = 0, top_prev_diff = 0
+            public effect_top_down = 0, effect_top_start = 0, effect_top_reset = 0, effect_top_anim = 0;
+            public effect_top_end = 0, effect_top_move = 0, effect_top_max = 0;
+            public bottom_down_x = 0, bottom_down_y = 0
+            public bottom_move_x = 0, bottom_move_y = 0
+            public bottom_diff = 0, bottom_prev_diff = 0
+            public effect_bottom_down = 0, effect_bottom_start = 0, effect_bottom_reset = 0, effect_bottom_anim = 0;
+            public effect_bottom_end = 0, effect_bottom_move = 0, effect_bottom_max = 0;
+            public left_down_x = 0, left_down_y = 0
+            public left_move_x = 0, left_move_y = 0
+            public left_diff = 0, left_prev_diff = 0
+            public effect_left_down = 0, effect_left_start = 0, effect_left_reset = 0, effect_left_anim = 0;
+            public effect_left_end = 0, effect_left_move = 0, effect_left_max = 0;
+            public right_down_x = 0, right_down_y = 0
+            public right_move_x = 0, right_move_y = 0
+            public right_diff = 0, right_prev_diff = 0
+            public effect_right_down = 0, effect_right_start = 0, effect_right_reset = 0, effect_right_anim = 0;
+            public effect_right_end = 0, effect_right_move = 0, effect_right_max = 0;
+        }
+        parts {
+            part { name: "bg";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.offset: 0 0;
+                    rel2.offset: -1 -1;
+                    color: 255 255 255 0;
+                }
+            }
+            part { name: "clipper";
+                type: RECT;
+                mouse_events: 0;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.to: "bg";
+                    rel2.to: "bg";
+                    rel1.offset: 0 0;
+                    rel2.offset: -1 -1;
+                }
+            }
+            part { name: "shadow_top1";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 0.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 1.0;
+                    min: 0 MAX_SIZE_STEP5;
+                    max: -1 MAX_SIZE_STEP5;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 MIN_SIZE_STEP5;
+                    rel2.offset: -1 MIN_SIZE_OFFSET_STEP5;
+                }
+            }
+            part { name: "shadow_top2";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 0.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 1.0;
+                    min: 0 MAX_SIZE_STEP4;
+                    max: -1 MAX_SIZE_STEP4;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 MIN_SIZE_STEP4;
+                    rel2.offset: -1 MIN_SIZE_OFFSET_STEP4;
+                }
+            }
+            part { name: "shadow_top3";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 0.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 1.0;
+                    min: 0 MAX_SIZE_STEP3;
+                    max: -1 MAX_SIZE_STEP3;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 MIN_SIZE_STEP3;
+                    rel2.offset: -1 MIN_SIZE_OFFSET_STEP3;
+                }
+            }
+            part { name: "shadow_top4";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 0.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 1.0;
+                    min: 0 MAX_SIZE_STEP2;
+                    max: -1 MAX_SIZE_STEP2;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 MIN_SIZE_STEP2;
+                    rel2.offset: -1 MIN_SIZE_OFFSET_STEP2;
+                }
+            }
+            part { name: "shadow_top5";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 0.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 1.0;
+                    min: 0 MAX_SIZE_STEP1;
+                    max: -1 MAX_SIZE_STEP1;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 MIN_SIZE_STEP1;
+                    rel2.offset: -1 MIN_SIZE_OFFSET_STEP1;
+                }
+            }
+            part { name: "shadow_bottom1";
+                    clip_to: "clipper";
+                    type: RECT;
+                    scale: 1;
+                    description { state: "default" 0.0;
+                    rel1.relative: 0.0 1.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 0.0;
+                    min: 0 MAX_SIZE_STEP5;
+                    max: -1 MAX_SIZE_STEP5;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 -MIN_SIZE_STEP5;
+                    rel2.offset: -1 -MIN_SIZE_OFFSET_STEP5;
+                }
+            }
+            part { name: "shadow_bottom2";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 1.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 0.0;
+                    min: 0 MAX_SIZE_STEP4;
+                    max: -1 MAX_SIZE_STEP4;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 -MIN_SIZE_STEP4;
+                    rel2.offset: -1 -MIN_SIZE_OFFSET_STEP4;
+                }
+            }
+            part { name: "shadow_bottom3";
+                    clip_to: "clipper";
+                    type: RECT;
+                    scale: 1;
+                    description { state: "default" 0.0;
+                    rel1.relative: 0.0 1.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 0.0;
+                    min: 0 MAX_SIZE_STEP3;
+                    max: -1 MAX_SIZE_STEP3;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 -MIN_SIZE_STEP3;
+                    rel2.offset: -1 -MIN_SIZE_OFFSET_STEP3;
+                }
+            }
+            part { name: "shadow_bottom4";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 1.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 0.0;
+                    min: 0 MAX_SIZE_STEP2;
+                    max: -1 MAX_SIZE_STEP2;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 -MIN_SIZE_STEP2;
+                    rel2.offset: -1 -MIN_SIZE_OFFSET_STEP2;
+                }
+            }
+            part { name: "shadow_bottom5";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 1.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.5 0.0;
+                    min: 0 MAX_SIZE_STEP1;
+                    max: -1 MAX_SIZE_STEP1;
+                    color_class: "B018";
+                    fixed: 0 1;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: 0 -MIN_SIZE_STEP1;
+                    rel2.offset: -1 -MIN_SIZE_OFFSET_STEP1;
+                }
+            }
+            part { name: "shadow_left1";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 0.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 1.0 0.5;
+                    min: MAX_SIZE_STEP5 0;
+                    max: MAX_SIZE_STEP5 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: MIN_SIZE_STEP5 0;
+                    rel2.offset: MIN_SIZE_OFFSET_STEP5 -1;
+                }
+            }
+            part { name: "shadow_left2";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 0.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 1.0 0.5;
+                    min: MAX_SIZE_STEP4 0;
+                    max: MAX_SIZE_STEP4 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: MIN_SIZE_STEP4 0;
+                    rel2.offset: MIN_SIZE_OFFSET_STEP4 -1;
+                }
+            }
+            part { name: "shadow_left3";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 0.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 1.0 0.5;
+                    min: MAX_SIZE_STEP3 0;
+                    max: MAX_SIZE_STEP3 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: MIN_SIZE_STEP3 0;
+                    rel2.offset: MIN_SIZE_OFFSET_STEP3 -1;
+                }
+            }
+            part { name: "shadow_left4";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 0.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 1.0 0.5;
+                    min: MAX_SIZE_STEP2 0;
+                    max: MAX_SIZE_STEP2 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: MIN_SIZE_STEP2 0;
+                    rel2.offset: MIN_SIZE_OFFSET_STEP2 -1;
+                }
+            }
+            part { name: "shadow_left5";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 0.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 0.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 1.0 0.5;
+                    min: MAX_SIZE_STEP1 0;
+                    max: MAX_SIZE_STEP1 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: MIN_SIZE_STEP1 0;
+                    rel2.offset: MIN_SIZE_OFFSET_STEP1 -1;
+                }
+            }
+            part { name: "shadow_right1";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 1.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.0 0.5;
+                    min: MAX_SIZE_STEP5 0;
+                    max: MAX_SIZE_STEP5 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: -MIN_SIZE_STEP5 0;
+                    rel2.offset: -MIN_SIZE_OFFSET_STEP5 -1;
+                }
+            }
+            part { name: "shadow_right2";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 1.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.0 0.5;
+                    min: MAX_SIZE_STEP4 0;
+                    max: MAX_SIZE_STEP4 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: -MIN_SIZE_STEP4 0;
+                    rel2.offset: -MIN_SIZE_OFFSET_STEP4 -1;
+                }
+            }
+            part { name: "shadow_right3";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 1.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.0 0.5;
+                    min: MAX_SIZE_STEP3 0;
+                    max: MAX_SIZE_STEP3 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: -MIN_SIZE_STEP3 0;
+                    rel2.offset: -MIN_SIZE_OFFSET_STEP3 -1;
+                }
+            }
+            part { name: "shadow_right4";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 1.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.0 0.5;
+                    min: MAX_SIZE_STEP2 0;
+                    max: MAX_SIZE_STEP2 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: -MIN_SIZE_STEP2 0;
+                    rel2.offset: -MIN_SIZE_OFFSET_STEP2 -1;
+                }
+            }
+            part { name: "shadow_right5";
+                clip_to: "clipper";
+                type: RECT;
+                scale: 1;
+                description { state: "default" 0.0;
+                    rel1.relative: 1.0 0.0;
+                    rel1.to: "bg";
+                    rel2.relative: 1.0 1.0;
+                    rel2.to: "bg";
+                    rel2.offset: -1 -1;
+                    align: 0.0 0.5;
+                    min: MAX_SIZE_STEP1 0;
+                    max: MAX_SIZE_STEP1 -1;
+                    color_class: "B018";
+                    fixed: 1 0;
+                }
+                description { state: "start" 0.0;
+                    inherit: "default" 0.0;
+                    rel1.offset: -MIN_SIZE_STEP1 0;
+                    rel2.offset: -MIN_SIZE_OFFSET_STEP1 -1;
+                }
+            }
+        }
+        programs {
+            /* Effect Hide */
+            program { name: "edge_top_mouse_up";
+                signal: "edge,hide";
+                source: "edge,top";
+                script {
+                    set_int(effect_top_down, 0);
+                    if (get_int(effect_top_start)) {
+                        set_int(effect_top_reset, 0);
+                        if (!get_int(effect_top_anim)) {
+                            if (!get_int(effect_top_end)) {
+                                set_int(effect_top_end, 1);
+                                run_program(PROGRAM:"edge_top_end");
+                            }
+                        }
+                    }
+                }
+            }
+            program { name: "edge_top_scroll";
+                signal: "elm,action,scroll";
+                source: "elm";
+                script {
+                    if (get_int(effect_top_start)) {
+                        set_state(PART:"shadow_top1", "default", 0.0);
+                        set_state(PART:"shadow_top2", "default", 0.0);
+                        set_state(PART:"shadow_top3", "default", 0.0);
+                        set_state(PART:"shadow_top4", "default", 0.0);
+                        set_state(PART:"shadow_top5", "default", 0.0);
+                        set_int(effect_top_reset, 0);
+                        run_program(PROGRAM:"edge_top_init");
+                    }
+                }
+            }
+            program { name: "edge_top_end";
+                action: STATE_SET "default" 0.0;
+                target: "shadow_top1";
+                target: "shadow_top2";
+                target: "shadow_top3";
+                target: "shadow_top4";
+                target: "shadow_top5";
+                transition: SINUSOIDAL 0.3;
+                after: "edge_top_init";
+            }
+            program { name: "edge_top_init";
+                script {
+                    set_int(effect_top_move, 0);
+                    if (!get_int(effect_top_reset))
+                        set_int(effect_top_start, 0);
+                    set_int(effect_top_max, 0);
+                    set_int(top_prev_diff, 0);
+                    set_int(effect_top_end, 0);
+                }
+            }
+            /* Effect Show */
+            program { name: "edge_top";
+                signal: "elm,edge,top";
+                source: "elm";
+                script {
+                    if (!get_int(effect_top_start)) {
+                        set_int(effect_top_start, 1);
+                        set_int(effect_top_anim, 1);
+                        run_program(PROGRAM:"edge_top_start");
+                    }
+                }
+            }
+            program { name: "edge_top_start";
+                action: STATE_SET "start" 0.0;
+                target: "shadow_top1";
+                target: "shadow_top2";
+                target: "shadow_top3";
+                target: "shadow_top4";
+                target: "shadow_top5";
+                transition: SINUSOIDAL 0.2;
+                after: "edge_top_after";
+            }
+            program { name: "edge_top_after";
+                script {
+                    new xx, yy;
+                    get_mouse(xx, yy);
+                    set_int(top_down_y, yy);
+                    set_int(effect_top_anim, 0);
+                    /* mouse down */
+                    if (get_int(effect_top_down)) {
+                        set_int(effect_top_move, 1);
+                    }
+                    /* mouse up */
+                    else {
+                        set_int(effect_top_reset, 0);
+                        if (!get_int(effect_top_end)) {
+                            set_int(effect_top_end, 1);
+                            run_program(PROGRAM:"edge_top_end");
+                        }
+                    }
+                }
+            }
+            program { name: "edge_top_mouse_move";
+                signal: "elm,edge,move";
+                source: "top";
+                script {
+                    if (!get_int(effect_top_down) && get_int(effect_top_start))
+                      set_int(effect_top_down, 1);
+                    if (get_int(effect_top_move)) {
+                        new xx, yy;
+                        new Float:fx1, Float:fx2, Float:fx3, Float:fx4, Float:fx5;
+                        get_mouse(xx, yy);
+                        set_int(top_move_y, yy);
+                        set_int(top_diff, (get_int(top_move_y) - get_int(top_down_y)));
+                        if (get_int(top_diff) < get_int(top_prev_diff)) {
+                            set_int(top_prev_diff, 0);
+                            set_int(effect_top_move, 0);
+                            set_int(effect_top_reset, 1);
+                            if (!get_int(effect_top_end)) {
+                                set_int(effect_top_end, 1);
+                                run_program(PROGRAM:"edge_top_end");
+                            }
+                        }
+                        else {
+                            if (!get_int(effect_top_end))
+                            {
+                                if (get_int(top_diff) <= 90 && !get_int(effect_top_max)) {
+                                    fx1 = fx2 = fx3 = fx4 = fx5 = sin(get_int(top_diff), DEGREES);
+                                    fx1 = fx1 * OVERLAY_SIZE_STEP5 + MIN_SIZE_STEP5;
+                                    fx2 = fx2 * OVERLAY_SIZE_STEP4 + MIN_SIZE_STEP4;
+                                    fx3 = fx3 * OVERLAY_SIZE_STEP3 + MIN_SIZE_STEP3;
+                                    fx4 = fx4 * OVERLAY_SIZE_STEP2 + MIN_SIZE_STEP2;
+                                    fx5 = fx5 * OVERLAY_SIZE_STEP1 + MIN_SIZE_STEP1;
+                                }
+                                else {
+                                    set_int(effect_top_max, 1);
+                                    fx1 = MAX_SIZE_STEP5;
+                                    fx2 = MAX_SIZE_STEP4;
+                                    fx3 = MAX_SIZE_STEP3;
+                                    fx4 = MAX_SIZE_STEP2;
+                                    fx5 = MAX_SIZE_STEP1;
+                                }
+                                custom_state(PART:"shadow_top1", "default", 0.0);
+                                set_state_val(PART:"shadow_top1", STATE_REL1_OFFSET, 0, round(fx1));
+                                set_state_val(PART:"shadow_top1", STATE_REL2_OFFSET, -1, round(fx1) - 1);
+                                set_state(PART:"shadow_top1", "custom", 0.0);
+
+                                custom_state(PART:"shadow_top2", "default", 0.0);
+                                set_state_val(PART:"shadow_top2", STATE_REL1_OFFSET, 0, round(fx2));
+                                set_state_val(PART:"shadow_top2", STATE_REL2_OFFSET, -1, round(fx2) - 1);
+                                set_state(PART:"shadow_top2", "custom", 0.0);
+
+                                custom_state(PART:"shadow_top3", "default", 0.0);
+                                set_state_val(PART:"shadow_top3", STATE_REL1_OFFSET, 0, round(fx3));
+                                set_state_val(PART:"shadow_top3", STATE_REL2_OFFSET, -1, round(fx3) - 1);
+                                set_state(PART:"shadow_top3", "custom", 0.0);
+
+                                custom_state(PART:"shadow_top4", "default", 0.0);
+                                set_state_val(PART:"shadow_top4", STATE_REL1_OFFSET, 0, round(fx4));
+                                set_state_val(PART:"shadow_top4", STATE_REL2_OFFSET, -1, round(fx4) - 1);
+                                set_state(PART:"shadow_top4", "custom", 0.0);
+
+                                custom_state(PART:"shadow_top5", "default", 0.0);
+                                set_state_val(PART:"shadow_top5", STATE_REL1_OFFSET, 0, round(fx5));
+                                set_state_val(PART:"shadow_top5", STATE_REL2_OFFSET, -1, round(fx5) - 1);
+                                set_state(PART:"shadow_top5", "custom", 0.0);
+                                set_int(top_prev_diff, get_int(top_diff));
+                            }
+                        }
+                    }
+                }
+            }
+            /* Effect Hide */
+            program { name: "edge_bottom_mouse_up";
+                signal: "edge,hide";
+                source: "edge,bottom";
+                script {
+                    set_int(effect_bottom_down, 0);
+                    if (get_int(effect_bottom_start)) {
+                        set_int(effect_bottom_reset, 0);
+                        if (!get_int(effect_bottom_anim)) {
+                            if (!get_int(effect_bottom_end)) {
+                                set_int(effect_bottom_end, 1);
+                                run_program(PROGRAM:"edge_bottom_end");
+                            }
+                        }
+                    }
+                }
+            }
+            program { name: "edge_bottom_scroll";
+                signal: "elm,action,scroll";
+                source: "elm";
+                script {
+                    if (get_int(effect_bottom_start)) {
+                        set_state(PART:"shadow_bottom1", "default", 0.0);
+                        set_state(PART:"shadow_bottom2", "default", 0.0);
+                        set_state(PART:"shadow_bottom3", "default", 0.0);
+                        set_state(PART:"shadow_bottom4", "default", 0.0);
+                        set_state(PART:"shadow_bottom5", "default", 0.0);
+                        set_int(effect_bottom_reset, 0);
+                        run_program(PROGRAM:"edge_bottom_init");
+                    }
+                }
+            }
+            program { name: "edge_bottom_end";
+                action: STATE_SET "default" 0.0;
+                target: "shadow_bottom1";
+                target: "shadow_bottom2";
+                target: "shadow_bottom3";
+                target: "shadow_bottom4";
+                target: "shadow_bottom5";
+                transition: SINUSOIDAL 0.3;
+                after: "edge_bottom_init";
+            }
+            program { name: "edge_bottom_init";
+                script {
+                    set_int(effect_bottom_move, 0);
+                    if (!get_int(effect_bottom_reset))
+                        set_int(effect_bottom_start, 0);
+                    set_int(effect_bottom_max, 0);
+                    set_int(bottom_prev_diff, 0);
+                    set_int(effect_bottom_end, 0);
+                }
+            }
+            /* Effect Show */
+            program { name: "edge_bottom";
+                signal: "elm,edge,bottom";
+                source: "elm";
+                script {
+                    if (!get_int(effect_bottom_start)) {
+                        set_int(effect_bottom_start, 1);
+                        set_int(effect_bottom_anim, 1);
+                        run_program(PROGRAM:"edge_bottom_start");
+                    }
+                }
+            }
+            program { name: "edge_bottom_start";
+                action: STATE_SET "start" 0.0;
+                target: "shadow_bottom1";
+                target: "shadow_bottom2";
+                target: "shadow_bottom3";
+                target: "shadow_bottom4";
+                target: "shadow_bottom5";
+                transition: SINUSOIDAL 0.2;
+                after: "edge_bottom_after";
+            }
+            program { name: "edge_bottom_after";
+                script {
+                    new xx, yy;
+                    get_mouse(xx, yy);
+                    set_int(effect_bottom_anim, 0);
+                    set_int(bottom_down_y, yy);
+                    /* mouse down */
+                    if (get_int(effect_bottom_down)) {
+                        set_int(effect_bottom_move, 1);
+                    }
+                    /* mouse up */
+                    else {
+                        set_int(effect_bottom_reset, 0);
+                        if (!get_int(effect_bottom_end)) {
+                            set_int(effect_bottom_end, 1);
+                            run_program(PROGRAM:"edge_bottom_end");
+                        }
+                    }
+                }
+            }
+            program { name: "edge_bottom_mouse_move";
+                signal: "elm,edge,move";
+                source: "bottom";
+                script {
+                    if (!get_int(effect_bottom_down) && get_int(effect_bottom_start))
+                      set_int(effect_bottom_down, 1);
+                    if (get_int(effect_bottom_move)) {
+                        new xx, yy;
+                        new Float:fx1, Float:fx2, Float:fx3, Float:fx4, Float:fx5;
+                        get_mouse(xx, yy);
+                        set_int(bottom_move_y, yy);
+                        set_int(bottom_diff, (get_int(bottom_down_y) - get_int(bottom_move_y)));
+                        if (get_int(bottom_diff) < get_int(bottom_prev_diff)) {
+                            set_int(bottom_prev_diff, 0);
+                            set_int(effect_bottom_move, 0);
+                            set_int(effect_bottom_reset, 1);
+                            if (!get_int(effect_bottom_end)) {
+                                set_int(effect_bottom_end, 1);
+                                run_program(PROGRAM:"edge_bottom_end");
+                            }
+                        }
+                        else {
+                            if (!get_int(effect_bottom_end))
+                            {
+                                if (get_int(bottom_diff) <= 90 && !get_int(effect_bottom_max)) {
+                                    fx1 = fx2 = fx3 = fx4 = fx5 = sin(get_int(bottom_diff), DEGREES);
+                                    fx1 = fx1 * OVERLAY_SIZE_STEP5 + MIN_SIZE_STEP5;
+                                    fx2 = fx2 * OVERLAY_SIZE_STEP4 + MIN_SIZE_STEP4;
+                                    fx3 = fx3 * OVERLAY_SIZE_STEP3 + MIN_SIZE_STEP3;
+                                    fx4 = fx4 * OVERLAY_SIZE_STEP2 + MIN_SIZE_STEP2;
+                                    fx5 = fx5 * OVERLAY_SIZE_STEP1 + MIN_SIZE_STEP1;
+                                }
+                                else {
+                                    set_int(effect_bottom_max, 1);
+                                    fx1 = MAX_SIZE_STEP5;
+                                    fx2 = MAX_SIZE_STEP4;
+                                    fx3 = MAX_SIZE_STEP3;
+                                    fx4 = MAX_SIZE_STEP2;
+                                    fx5 = MAX_SIZE_STEP1;
+                                }
+                                custom_state(PART:"shadow_bottom1", "default", 0.0);
+                                set_state_val(PART:"shadow_bottom1", STATE_REL1_OFFSET, 0, round(fx1) * -1);
+                                set_state_val(PART:"shadow_bottom1", STATE_REL2_OFFSET, -1, (round(fx1) - 1) * -1);
+                                set_state(PART:"shadow_bottom1", "custom", 0.0);
+
+                                custom_state(PART:"shadow_bottom2", "default", 0.0);
+                                set_state_val(PART:"shadow_bottom2", STATE_REL1_OFFSET, 0, round(fx2) * -1);
+                                set_state_val(PART:"shadow_bottom2", STATE_REL2_OFFSET, -1, (round(fx2) - 1) * -1);
+                                set_state(PART:"shadow_bottom2", "custom", 0.0);
+
+                                custom_state(PART:"shadow_bottom3", "default", 0.0);
+                                set_state_val(PART:"shadow_bottom3", STATE_REL1_OFFSET, 0, round(fx3) * -1);
+                                set_state_val(PART:"shadow_bottom3", STATE_REL2_OFFSET, -1, (round(fx3) - 1) * -1);
+                                set_state(PART:"shadow_bottom3", "custom", 0.0);
+
+                                custom_state(PART:"shadow_bottom4", "default", 0.0);
+                                set_state_val(PART:"shadow_bottom4", STATE_REL1_OFFSET, 0, round(fx4) * -1);
+                                set_state_val(PART:"shadow_bottom4", STATE_REL2_OFFSET, -1, (round(fx4) - 1) * -1);
+                                set_state(PART:"shadow_bottom4", "custom", 0.0);
+
+                                custom_state(PART:"shadow_bottom5", "default", 0.0);
+                                set_state_val(PART:"shadow_bottom5", STATE_REL1_OFFSET, 0, round(fx5) * -1);
+                                set_state_val(PART:"shadow_bottom5", STATE_REL2_OFFSET, -1, (round(fx5) - 1) * -1 );
+                                set_state(PART:"shadow_bottom5", "custom", 0.0);
+                                set_int(bottom_prev_diff, get_int(bottom_diff));
+                            }
+                        }
+                    }
+                }
+            }
+            /* Effect Hide */
+            program { name: "edge_left_mouse_up";
+                signal: "edge,hide";
+                source: "edge,left";
+                script {
+                    set_int(effect_left_down, 0);
+                    if (get_int(effect_left_start)) {
+                        set_int(effect_left_reset, 0);
+                        if (!get_int(effect_left_anim)) {
+                            if (!get_int(effect_left_end)) {
+                                set_int(effect_left_end, 1);
+                                run_program(PROGRAM:"edge_left_end");
+                            }
+                        }
+                    }
+                }
+            }
+            program { name: "edge_left_scroll";
+                signal: "elm,action,scroll";
+                source: "elm";
+                script {
+                    if (get_int(effect_left_start)) {
+                        set_state(PART:"shadow_left1", "default", 0.0);
+                        set_state(PART:"shadow_left2", "default", 0.0);
+                        set_state(PART:"shadow_left3", "default", 0.0);
+                        set_state(PART:"shadow_left4", "default", 0.0);
+                        set_state(PART:"shadow_left5", "default", 0.0);
+                        set_int(effect_left_reset, 0);
+                        run_program(PROGRAM:"edge_left_init");
+                    }
+                }
+            }
+            program { name: "edge_left_end";
+                action: STATE_SET "default" 0.0;
+                target: "shadow_left1";
+                target: "shadow_left2";
+                target: "shadow_left3";
+                target: "shadow_left4";
+                target: "shadow_left5";
+                transition: SINUSOIDAL 0.3;
+                after: "edge_left_init";
+            }
+            program { name: "edge_left_init";
+                script {
+                    set_int(effect_left_move, 0);
+                    if (!get_int(effect_left_reset))
+                        set_int(effect_left_start, 0);
+                    set_int(effect_left_max, 0);
+                    set_int(left_prev_diff, 0);
+                    set_int(effect_left_end, 0);
+                }
+            }
+            /* Effect Show */
+            program { name: "edge_left";
+                signal: "elm,edge,left";
+                source: "elm";
+                script {
+                    if (!get_int(effect_left_start)) {
+                        set_int(effect_left_start, 1);
+                        set_int(effect_left_anim, 1);
+                        run_program(PROGRAM:"edge_left_start");
+                    }
+                }
+            }
+            program { name: "edge_left_start";
+                action: STATE_SET "start" 0.0;
+                target: "shadow_left1";
+                target: "shadow_left2";
+                target: "shadow_left3";
+                target: "shadow_left4";
+                target: "shadow_left5";
+                transition: SINUSOIDAL 0.2;
+                after: "edge_left_after";
+            }
+            program { name: "edge_left_after";
+                script {
+                    new xx, yy;
+                    get_mouse(xx, yy);
+                    set_int(left_down_x, xx);
+                    set_int(effect_left_anim, 0);
+                    /* mouse down */
+                    if (get_int(effect_left_down)) {
+                        set_int(effect_left_move, 1);
+                    }
+                    /* mouse up */
+                    else {
+                        set_int(effect_left_reset, 0);
+                        if (!get_int(effect_left_end)) {
+                            set_int(effect_left_end, 1);
+                            run_program(PROGRAM:"edge_left_end");
+                        }
+                    }
+                }
+            }
+            program { name: "edge_left_mouse_move";
+                signal: "elm,edge,move";
+                source: "left";
+                script {
+                    if (!get_int(effect_left_down) && get_int(effect_left_start))
+                        set_int(effect_left_down, 1);
+                    if (get_int(effect_left_move)) {
+                        new xx, yy;
+                        new Float:fx1, Float:fx2, Float:fx3, Float:fx4, Float:fx5;
+                        get_mouse(xx, yy);
+                        set_int(left_move_x, xx);
+                        set_int(left_diff, (get_int(left_move_x) - get_int(left_down_x)));
+                        if (get_int(left_diff) < get_int(left_prev_diff)) {
+                            set_int(left_prev_diff, 0);
+                            set_int(effect_left_move, 0);
+                            set_int(effect_left_reset, 1);
+                            if (!get_int(effect_left_end)) {
+                                set_int(effect_left_end, 1);
+                                run_program(PROGRAM:"edge_left_end");
+                            }
+                        }
+                        else {
+                            if (!get_int(effect_left_end))
+                            {
+                                if (get_int(left_diff) <= 90 && !get_int(effect_left_max)) {
+                                    fx1 = fx2 = fx3 = fx4 = fx5 = sin(get_int(left_diff), DEGREES);
+                                    fx1 = fx1 * OVERLAY_SIZE_STEP5 + MIN_SIZE_STEP5;
+                                    fx2 = fx2 * OVERLAY_SIZE_STEP4 + MIN_SIZE_STEP4;
+                                    fx3 = fx3 * OVERLAY_SIZE_STEP3 + MIN_SIZE_STEP3;
+                                    fx4 = fx4 * OVERLAY_SIZE_STEP2 + MIN_SIZE_STEP2;
+                                    fx5 = fx5 * OVERLAY_SIZE_STEP1 + MIN_SIZE_STEP1;
+                                }
+                                else {
+                                    set_int(effect_left_max, 1);
+                                    fx1 = MAX_SIZE_STEP5;
+                                    fx2 = MAX_SIZE_STEP4;
+                                    fx3 = MAX_SIZE_STEP3;
+                                    fx4 = MAX_SIZE_STEP2;
+                                    fx5 = MAX_SIZE_STEP1;
+                                }
+                                custom_state(PART:"shadow_left1", "default", 0.0);
+                                set_state_val(PART:"shadow_left1", STATE_REL1_OFFSET, round(fx1), 0);
+                                set_state_val(PART:"shadow_left1", STATE_REL2_OFFSET, round(fx1) - 1, -1);
+                                set_state(PART:"shadow_left1", "custom", 0.0);
+
+                                custom_state(PART:"shadow_left2", "default", 0.0);
+                                set_state_val(PART:"shadow_left2", STATE_REL1_OFFSET, round(fx2), 0);
+                                set_state_val(PART:"shadow_left2", STATE_REL2_OFFSET, round(fx2) - 1, - 1);
+                                set_state(PART:"shadow_left2", "custom", 0.0);
+
+                                custom_state(PART:"shadow_left3", "default", 0.0);
+                                set_state_val(PART:"shadow_left3", STATE_REL1_OFFSET, round(fx3), 0);
+                                set_state_val(PART:"shadow_left3", STATE_REL2_OFFSET, round(fx3) - 1, -1);
+                                set_state(PART:"shadow_left3", "custom", 0.0);
+
+                                custom_state(PART:"shadow_left4", "default", 0.0);
+                                set_state_val(PART:"shadow_left4", STATE_REL1_OFFSET, round(fx4), 0);
+                                set_state_val(PART:"shadow_left4", STATE_REL2_OFFSET, round(fx4) - 1, - 1);
+                                set_state(PART:"shadow_left4", "custom", 0.0);
+
+                                custom_state(PART:"shadow_left5", "default", 0.0);
+                                set_state_val(PART:"shadow_left5", STATE_REL1_OFFSET, round(fx5), 0);
+                                set_state_val(PART:"shadow_left5", STATE_REL2_OFFSET, round(fx5) - 1, - 1);
+                                set_state(PART:"shadow_left5", "custom", 0.0);
+                                set_int(left_prev_diff, get_int(left_diff));
+                            }
+                        }
+                    }
+                }
+            }
+            /* Effect Hide */
+            program { name: "edge_right_mouse_up";
+                signal: "edge,hide";
+                source: "edge,right";
+                script {
+                    set_int(effect_right_down, 0);
+                    if (get_int(effect_right_start)) {
+                        set_int(effect_right_reset, 0);
+                        if (!get_int(effect_right_anim)) {
+                            if (!get_int(effect_right_end)) {
+                                set_int(effect_right_end, 1);
+                                run_program(PROGRAM:"edge_right_end");
+                            }
+                        }
+                    }
+                }
+            }
+            program { name: "edge_right_scroll";
+                signal: "elm,action,scroll";
+                source: "elm";
+                script {
+                    if (get_int(effect_right_start)) {
+                        set_state(PART:"shadow_right1", "default", 0.0);
+                        set_state(PART:"shadow_right2", "default", 0.0);
+                        set_state(PART:"shadow_right3", "default", 0.0);
+                        set_state(PART:"shadow_right4", "default", 0.0);
+                        set_state(PART:"shadow_right5", "default", 0.0);
+                        set_int(effect_right_reset, 0);
+                        run_program(PROGRAM:"edge_right_init");
+                    }
+                }
+            }
+            program { name: "edge_right_end";
+                action: STATE_SET "default" 0.0;
+                target: "shadow_right1";
+                target: "shadow_right2";
+                target: "shadow_right3";
+                target: "shadow_right4";
+                target: "shadow_right5";
+                transition: SINUSOIDAL 0.3;
+                after: "edge_right_init";
+            }
+            program { name: "edge_right_init";
+                script {
+                    set_int(effect_right_move, 0);
+                    if (!get_int(effect_right_reset))
+                        set_int(effect_right_start, 0);
+                    set_int(effect_right_max, 0);
+                    set_int(right_prev_diff, 0);
+                    set_int(effect_right_end, 0);
+                }
+            }
+            /* Effect Show */
+            program { name: "edge_right";
+                signal: "elm,edge,right";
+                source: "elm";
+                script {
+                    if (!get_int(effect_right_start)) {
+                        set_int(effect_right_start, 1);
+                        set_int(effect_right_anim, 1);
+                        run_program(PROGRAM:"edge_right_start");
+                    }
+                }
+            }
+            program { name: "edge_right_start";
+                action: STATE_SET "start" 0.0;
+                target: "shadow_right1";
+                target: "shadow_right2";
+                target: "shadow_right3";
+                target: "shadow_right4";
+                target: "shadow_right5";
+                transition: SINUSOIDAL 0.2;
+                after: "edge_right_after";
+            }
+            program { name: "edge_right_after";
+                script {
+                    new xx, yy;
+                    get_mouse(xx, yy);
+                    set_int(right_down_x, xx);
+                    set_int(effect_right_anim, 0);
+                    /* mouse down */
+                    if (get_int(effect_right_down)) {
+                        set_int(effect_right_move, 1);
+                    }
+                    /* mouse up */
+                    else {
+                        set_int(effect_right_reset, 0);
+                        if (!get_int(effect_right_end)) {
+                            set_int(effect_right_end, 1);
+                            run_program(PROGRAM:"edge_right_end");
+                        }
+                    }
+                }
+            }
+            program { name: "edge_right_mouse_move";
+                signal: "elm,edge,move";
+                source: "right";
+                script {
+                    if (!get_int(effect_right_down) && get_int(effect_right_start))
+                      set_int(effect_right_down, 1);
+                    if (get_int(effect_right_move)) {
+                        new xx, yy;
+                        new Float:fx1, Float:fx2, Float:fx3, Float:fx4, Float:fx5;
+                        get_mouse(xx, yy);
+                        set_int(right_move_x, xx);
+                        set_int(right_diff, (get_int(right_down_x) - get_int(right_move_x)));
+                        if (get_int(right_diff) < get_int(right_prev_diff)) {
+                            set_int(right_prev_diff, 0);
+                            set_int(effect_right_move, 0);
+                            set_int(effect_right_reset, 1);
+                            if (!get_int(effect_right_end)) {
+                                set_int(effect_right_end, 1);
+                                run_program(PROGRAM:"edge_right_end");
+                            }
+                        }
+                        else {
+                            if (!get_int(effect_right_end))
+                            {
+                                if (get_int(right_diff) <= 90 && !get_int(effect_right_max)) {
+                                    fx1 = fx2 = fx3 = fx4 = fx5 = sin(get_int(right_diff), DEGREES);
+                                    fx1 = fx1 * OVERLAY_SIZE_STEP5 + MIN_SIZE_STEP5;
+                                    fx2 = fx2 * OVERLAY_SIZE_STEP4 + MIN_SIZE_STEP4;
+                                    fx3 = fx3 * OVERLAY_SIZE_STEP3 + MIN_SIZE_STEP3;
+                                    fx4 = fx4 * OVERLAY_SIZE_STEP2 + MIN_SIZE_STEP2;
+                                    fx5 = fx5 * OVERLAY_SIZE_STEP1 + MIN_SIZE_STEP1;
+                                }
+                                else {
+                                    set_int(effect_right_max, 1);
+                                    fx1 = MAX_SIZE_STEP5;
+                                    fx2 = MAX_SIZE_STEP4;
+                                    fx3 = MAX_SIZE_STEP3;
+                                    fx4 = MAX_SIZE_STEP2;
+                                    fx5 = MAX_SIZE_STEP1;
+                                }
+                                custom_state(PART:"shadow_right1", "default", 0.0);
+                                set_state_val(PART:"shadow_right1", STATE_REL1_OFFSET, round(fx1) * -1, 0);
+                                set_state_val(PART:"shadow_right1", STATE_REL2_OFFSET, (round(fx1) - 1) * -1, -1);
+                                set_state(PART:"shadow_right1", "custom", 0.0);
+
+                                custom_state(PART:"shadow_right2", "default", 0.0);
+                                set_state_val(PART:"shadow_right2", STATE_REL1_OFFSET, round(fx2) * -1, 0);
+                                set_state_val(PART:"shadow_right2", STATE_REL2_OFFSET, (round(fx2) - 1) * -1, - 1);
+                                set_state(PART:"shadow_right2", "custom", 0.0);
+
+                                custom_state(PART:"shadow_right3", "default", 0.0);
+                                set_state_val(PART:"shadow_right3", STATE_REL1_OFFSET, round(fx3) * -1, 0);
+                                set_state_val(PART:"shadow_right3", STATE_REL2_OFFSET, (round(fx3) - 1) * -1, -1);
+                                set_state(PART:"shadow_right3", "custom", 0.0);
+
+                                custom_state(PART:"shadow_right4", "default", 0.0);
+                                set_state_val(PART:"shadow_right4", STATE_REL1_OFFSET, round(fx4) * -1, 0);
+                                set_state_val(PART:"shadow_right4", STATE_REL2_OFFSET, (round(fx4) - 1) * -1, - 1);
+                                set_state(PART:"shadow_right4", "custom", 0.0);
+
+
+                                custom_state(PART:"shadow_right5", "default", 0.0);
+                                set_state_val(PART:"shadow_right5", STATE_REL1_OFFSET, round(fx5) * -1, 0);
+                                set_state_val(PART:"shadow_right5", STATE_REL2_OFFSET, (round(fx5) - 1) * -1, - 1);
+                                set_state(PART:"shadow_right5", "custom", 0.0);
+                                set_int(right_prev_diff, get_int(right_diff));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

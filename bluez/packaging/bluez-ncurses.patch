@@ -1,0 +1,70 @@
+From 999ac3fe39445ffef187c8da42abf58cbf87b9a8 Mon Sep 17 00:00:00 2001
+From: Seungyoun Ju <sy39.ju@samsung.com>
+Date: Wed, 20 Jan 2016 14:26:53 +0900
+Subject: [PATCH] Fix build error
+
+Change-Id: Iae6ea760186c705da7fe51c73a2ea9bf9710e6b0
+---
+ Makefile.tools | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile.tools b/Makefile.tools
+index e79b53b..f46ef49 100644
+--- a/Makefile.tools
++++ b/Makefile.tools
+@@ -8,7 +8,7 @@ client_bluetoothctl_SOURCES = client/main.c \
+ 					client/gatt.h client/gatt.c \
+ 					monitor/uuid.h monitor/uuid.c
+ client_bluetoothctl_LDADD = gdbus/libgdbus-internal.la @GLIB_LIBS@ @DBUS_LIBS@ \
+-				-lreadline
++				-lreadline -lncurses
+ endif
+ 
+ if MONITOR
+@@ -136,7 +136,7 @@ tools_sco_tester_SOURCES = tools/sco-tester.c monitor/bt.h \
+ 				emulator/bthost.h emulator/bthost.c \
+ 				emulator/smp.c
+ tools_sco_tester_LDADD = lib/libbluetooth-internal.la \
+-				src/libshared-glib.la @GLIB_LIBS@
++				src/libshared-glib.la @GLIB_LIBS@ -lncurses
+ 
+ tools_hci_tester_SOURCES = tools/hci-tester.c monitor/bt.h
+ tools_hci_tester_LDADD = src/libshared-glib.la @GLIB_LIBS@
+@@ -350,12 +350,12 @@ attrib_gatttool_SOURCES = attrib/gatttool.c attrib/att.c attrib/gatt.c \
+ 				attrib/utils.c src/log.c client/display.c \
+ 				client/display.h
+ attrib_gatttool_LDADD = lib/libbluetooth-internal.la \
+-			src/libshared-glib.la @GLIB_LIBS@ -lreadline
++			src/libshared-glib.la @GLIB_LIBS@ -lreadline -lncurses
+ 
+ tools_obex_client_tool_SOURCES = $(gobex_sources) $(btio_sources) \
+ 						tools/obex-client-tool.c
+ tools_obex_client_tool_LDADD = lib/libbluetooth-internal.la \
+-						@GLIB_LIBS@ -lreadline
++						@GLIB_LIBS@ -lreadline -lncurses
+ 
+ tools_obex_server_tool_SOURCES = $(gobex_sources) $(btio_sources) \
+ 						tools/obex-server-tool.c
+@@ -364,16 +364,16 @@ tools_obex_server_tool_LDADD = lib/libbluetooth-internal.la @GLIB_LIBS@
+ tools_bluetooth_player_SOURCES = tools/bluetooth-player.c \
+ 				client/display.h client/display.c
+ tools_bluetooth_player_LDADD = gdbus/libgdbus-internal.la \
+-				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline
++				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline -lncurses
+ 
+ tools_obexctl_SOURCES = tools/obexctl.c \
+ 				client/display.h client/display.c
+ tools_obexctl_LDADD = gdbus/libgdbus-internal.la \
+-				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline
++				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline -lncurses
+ 
+ tools_btmgmt_SOURCES = tools/btmgmt.c src/uuid-helper.c client/display.c
+ tools_btmgmt_LDADD = lib/libbluetooth-internal.la src/libshared-mainloop.la \
+-				-lreadline
++				-lreadline -lncurses
+ endif
+ 
+ if EXPERIMENTAL
+-- 
+1.9.1
+
